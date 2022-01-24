@@ -29,17 +29,15 @@ const AuthScreen = ({ navigation }: RootAuthParamList<'Authentication'>) => {
 	} = useForm();
 
 	const isAuth = useSelector((state) => state.auth.userId);
-	console.log(`isAuth =>`, isAuth);
 
 	const dispatch = useDispatch();
 
 	const onSubmit = async (data) => {
-		console.log(`data =>`, data);
-		const { email, password } = data;
+		const { email, username, password } = data;
 		if (loginMode) {
 			// Connexion
 			try {
-				await dispatch(authActions.signin(email, password));
+				await dispatch(authActions.signin(username, password));
 				navigation.navigate('Home');
 			} catch (error) {
 				switch (error.message) {
@@ -70,24 +68,26 @@ const AuthScreen = ({ navigation }: RootAuthParamList<'Authentication'>) => {
 		} else {
 			// Inscription
 			try {
-				await dispatch(authActions.signup(email, password));
+				await dispatch(authActions.signup(username, password));
 				navigation.navigate('Home');
 			} catch (error) {
-				switch (error.message) {
-					case 'EMAIL_EXISTS':
-						Alert.alert(
-							'Action impossible',
-							'Cet email est déja utilisé.'
-						);
-						break;
+				console.log(`error =>`, error.message);
+				Alert.alert('Action impossible', error.message);
+				// switch (error.message) {
+				// 	case 'EMAIL_EXISTS':
+				// 		Alert.alert(
+				// 			'Action impossible',
+				// 			'Cet email est déja utilisé.'
+				// 		);
+				// 		break;
 
-					default:
-						Alert.alert(
-							'Action impossible',
-							'Une erreur est survenue.'
-						);
-						break;
-				}
+				// 	default:
+				// 		Alert.alert(
+				// 			'Action impossible',
+				// 			'Une erreur est survenue.'
+				// 		);
+				// 		break;
+				// }
 			}
 		}
 
@@ -135,7 +135,7 @@ const AuthScreen = ({ navigation }: RootAuthParamList<'Authentication'>) => {
 											autoCorrect={false}
 										/>
 									)}
-									name='email'
+									name='username'
 									rules={{
 										required: {
 											value: true,

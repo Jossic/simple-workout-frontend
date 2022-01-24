@@ -2,7 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import axios from '../../axios-instance';
 import Keys from '../../constants/Keys';
-import { Auth } from '../../types/authTypes';
 
 export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';
@@ -11,7 +10,7 @@ export const LOGOUT = 'LOGOUT';
 export const SET_TRY_LOGIN = 'SET_TRY_LOGIN';
 export const FETCH_REFRESH_TOKEN = 'FETCH_REFRESH_TOKEN';
 
-export const signup = (email, password):<Auth> => {
+export const signup = (email, password) => {
 	return async (dispatch) => {
 		await axios
 			.post(

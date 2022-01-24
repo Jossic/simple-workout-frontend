@@ -20,9 +20,7 @@ import { RootAuthParamList } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
 import * as authActions from '../store/actions/authActions';
 
-const AuthenticationScreen = ({
-	navigation,
-}: RootAuthParamList<'Authentication'>) => {
+const AuthScreen = ({ navigation }: RootAuthParamList<'Authentication'>) => {
 	const [loginMode, setLoginMode] = useState(false);
 	const {
 		control,
@@ -221,7 +219,7 @@ const AuthenticationScreen = ({
 	);
 };
 
-export default AuthenticationScreen;
+export default AuthScreen;
 
 const styles = StyleSheet.create({
 	container: {

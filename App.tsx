@@ -1,22 +1,45 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+// Redux
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import authReducer from './store/reducers/authReducers';
+import thunk from 'redux-thunk';
+
+// Amplify
+import Amplify, { Auth } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
+
+// Composants
+import { AppNavigator } from './navigation/AppNavigator';
+
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 
-export default function App() {
-  const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
+const rootReducer = combineReducers({
+	auth: authReducer,
+});
 
-  if (!isLoadingComplete) {
-    return null;
-  } else {
-    return (
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
-    );
-  }
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+export default function App() {
+	const isLoadingComplete = useCachedResources();
+	const colorScheme = useColorScheme();
+
+	if (!isLoadingComplete) {
+		return null;
+	} else {
+		return (
+			<Provider store={store}>
+				<SafeAreaProvider>
+					{/* <AppNavigator /> */}
+					<Navigation colorScheme={colorScheme} />
+					<StatusBar />
+				</SafeAreaProvider>
+			</Provider>
+		);
+	}
 }

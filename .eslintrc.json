@@ -28,6 +28,10 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
+    ],
+    "react/function-component-definition": {
+      "namedComponents": "arrow-function",
+      "unnamedComponents": "arrow-function"
+    }
   }
 }

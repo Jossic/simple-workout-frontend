@@ -29,6 +29,19 @@ import {
 } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
+// Auth stack navigator
+const AuthStack = createStackNavigator();
+
+const AuthenticatorStackNavigator = () => (
+  <AuthStack.Navigator>
+    <AuthStack.Screen
+      name="Authentication"
+      component={AuthScreen}
+      options={{ headerShown: false }}
+    />
+  </AuthStack.Navigator>
+);
+
 export default function Navigation({
   colorScheme,
 }: {
@@ -113,18 +126,3 @@ function BottomTabNavigator() {
 // }) {
 //   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 // }
-
-// Auth stack navigator
-const AuthStack = createStackNavigator();
-
-export const AuthenticatorStackNavigator = () => {
-  return (
-    <AuthStack.Navigator>
-      <AuthStack.Screen
-        name="Authentication"
-        component={AuthScreen}
-        options={{ headerShown: false }}
-      />
-    </AuthStack.Navigator>
-  );
-};

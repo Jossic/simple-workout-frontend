@@ -20,7 +20,9 @@ import { RootAuthParamList } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
 import * as authActions from '../store/actions/authActions';
 
-const AuthScreen = ({ navigation }: RootAuthParamList<'Authentication'>) => {
+const AuthScreen: React.FC = ({
+	navigation,
+}: RootAuthParamList<'Authentication'>) => {
 	const [loginMode, setLoginMode] = useState(false);
 	const {
 		control,

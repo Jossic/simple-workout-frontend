@@ -56,7 +56,7 @@ export const signin = (email, password) => {
   return async (dispatch) => {
     try {
       const user = await Auth.signIn({
-        // username: 'jossic',
+        username: 'jossic',
         password,
         attributes: {
           email,

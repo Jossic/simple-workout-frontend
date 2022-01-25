@@ -23,6 +23,7 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import {
+  AuthStackParamList,
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
@@ -30,7 +31,7 @@ import {
 import LinkingConfiguration from './LinkingConfiguration';
 
 // Auth stack navigator
-const AuthStack = createStackNavigator();
+const AuthStack = createStackNavigator<AuthStackParamList>();
 
 const AuthenticatorStackNavigator = () => (
   <AuthStack.Navigator>

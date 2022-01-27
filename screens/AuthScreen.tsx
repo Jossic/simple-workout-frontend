@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
   form: {
     marginTop: 30,
     padding: 30,
-    backgroundColor: '#95a5a6',
+    backgroundColor: Colors.ternary,
     borderRadius: 5,
     width: Dimensions.get('window').width * 0.85,
   },

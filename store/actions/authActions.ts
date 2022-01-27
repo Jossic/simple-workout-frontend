@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Auth } from 'aws-amplify';
 
 import axios from '../../axios-instance';
 
@@ -8,7 +9,6 @@ export const AUTHENTICATE = 'AUTHENTICATE';
 export const LOGOUT = 'LOGOUT';
 export const SET_TRY_LOGIN = 'SET_TRY_LOGIN';
 export const FETCH_REFRESH_TOKEN = 'FETCH_REFRESH_TOKEN';
-import { Auth } from 'aws-amplify';
 
 export const signup = (username: string, email: string, password: string) => {
   return async (dispatch) => {

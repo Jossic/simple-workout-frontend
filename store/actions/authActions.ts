@@ -1,8 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Auth } from 'aws-amplify';
 
-import axios from '../../axios-instance';
-
 export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';
 export const AUTHENTICATE = 'AUTHENTICATE';

@@ -11,30 +11,41 @@ import {
   Platform,
   Alert,
 } from 'react-native';
-import { useForm, Controller } from 'react-hook-form';
-import Colors from '../constants/Colors';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 
-import { RootAuthParamList } from '../types';
+import { AuthStackParamList } from '../types';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import * as authActions from '../store/actions/authActions';
 
+import Colors from '../constants/Colors';
+import { Auth } from '../store/reducers/authReducers';
+
+interface submitLogin {
+  email: string;
+  username: string;
+  password: string;
+}
+
 const AuthScreen: React.FC = ({
   navigation,
-}: RootAuthParamList<'Authentication'>) => {
+}: AuthStackParamList<'Authentication'>) => {
   const [loginMode, setLoginMode] = useState(false);
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<submitLogin>();
 
-  const isAuth = useSelector((state) => state.auth.userId);
+  const isAuth = useSelector((state: Auth) => {
+    // console.log(`state =>`, state);
+    return state.auth.userId;
+  });
 
   const dispatch = useDispatch();
 
-  const onSubmit = async (data) => {
+  const onSubmit: SubmitHandler<submitLogin> = async (data) => {
     const { email, username, password } = data;
     if (loginMode) {
       // Connexion
@@ -62,7 +73,7 @@ const AuthScreen: React.FC = ({
       // Inscription
       try {
         await dispatch(authActions.signup(username, email, password));
-        navigation.navigate('Home');
+        navigation.navigate('ConfirmLogin');
       } catch (error) {
         console.log(`error =>`, error.message);
         Alert.alert('Action impossible', error.message);

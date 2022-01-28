@@ -18,6 +18,7 @@ import { ColorSchemeName } from 'react-native';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import AuthScreen from '../screens/AuthScreen';
+import ConfirmLoginSceen from '../screens/ConfirmLoginSceen';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
@@ -38,6 +39,11 @@ const AuthenticatorStackNavigator = () => (
     <AuthStack.Screen
       name="Authentication"
       component={AuthScreen}
+      options={{ headerShown: false }}
+    />
+    <AuthStack.Screen
+      name="ConfirmLogin"
+      component={ConfirmLoginSceen}
       options={{ headerShown: false }}
     />
   </AuthStack.Navigator>

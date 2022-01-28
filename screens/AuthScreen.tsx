@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 
-import { AuthStackParamList } from '../types';
+import { AuthStackParamList, AuthStackScreenProps } from '../types';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,9 +28,7 @@ interface submitLogin {
   password: string;
 }
 
-const AuthScreen: React.FC = ({
-  navigation,
-}: AuthStackParamList<'Authentication'>) => {
+const AuthScreen = ({ navigation }: AuthStackScreenProps<'Authentication'>) => {
   const [loginMode, setLoginMode] = useState(false);
   const {
     control,
@@ -73,7 +71,7 @@ const AuthScreen: React.FC = ({
       // Inscription
       try {
         await dispatch(authActions.signup(username, email, password));
-        navigation.navigate('ConfirmLogin');
+        navigation.navigate('ConfirmLogin', { username });
       } catch (error) {
         console.log(`error =>`, error.message);
         Alert.alert('Action impossible', error.message);

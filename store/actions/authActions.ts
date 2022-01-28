@@ -7,6 +7,7 @@ export const AUTHENTICATE = 'AUTHENTICATE';
 export const LOGOUT = 'LOGOUT';
 export const SET_TRY_LOGIN = 'SET_TRY_LOGIN';
 export const FETCH_REFRESH_TOKEN = 'FETCH_REFRESH_TOKEN';
+export const CONFIRM = 'CONFIRM';
 
 export const signup = (username: string, email: string, password: string) => {
   return async (dispatch) => {
@@ -19,6 +20,7 @@ export const signup = (username: string, email: string, password: string) => {
         password,
         attributes: {
           email,
+          preferred_username: username,
         },
       });
       console.log(`user =>`, user);
@@ -113,6 +115,18 @@ export const setDidTry = () => {
 // 			});
 // 	};
 // };
+
+export const confirm = async (username: string, code: string) => {
+  try {
+    const user = await Auth.confirmSignUp(username, code);
+    console.log(`user =>`, user);
+    return {
+      type: CONFIRM,
+    };
+  } catch (error) {
+    console.log('error signing out: ', error);
+  }
+};
 
 export const logout = async () => {
   try {

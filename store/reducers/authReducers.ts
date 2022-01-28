@@ -5,6 +5,7 @@ import {
   SET_TRY_LOGIN,
   FETCH_REFRESH_TOKEN,
   LOGOUT,
+  CONFIRM,
 } from '../actions/authActions';
 
 export interface Auth {
@@ -57,6 +58,12 @@ export default (state = initialState, action) => {
         userId: null,
         token: null,
       };
+    // case CONFIRM:
+    //   return {
+    //     ...state,
+    //     userId: null,
+    //     token: null,
+    //   };
     default:
       return state;
   }

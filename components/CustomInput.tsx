@@ -22,13 +22,13 @@ const CustomInput: React.FC<CustomInputProps> = ({
 }) => {
   return (
     <>
-      <Text style={styles.label}>Nom d'utilisateur</Text>
+      <Text style={styles.label}>{label}</Text>
       <View style={styles.inputContainer}>
         <Controller
           control={control}
           render={({ field: { value, onChange } }) => (
             <TextInput
-              placeholder="Nom d'utilisateur..."
+              placeholder={placeholder}
               value={value}
               onChangeText={onChange}
               style={styles.input}
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   label: {
+    marginTop: 10,
     marginBottom: 5,
     color: Colors.primary,
     fontWeight: 'bold',

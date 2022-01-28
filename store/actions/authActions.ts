@@ -12,18 +12,15 @@ export const CONFIRM = 'CONFIRM';
 export const signup = (username: string, email: string, password: string) => {
   return async (dispatch) => {
     try {
-      console.log(`username =>`, username);
-      console.log(`email =>`, email);
-      console.log(`password =>`, password);
       const user = await Auth.signUp({
         username,
         password,
         attributes: {
           email,
-          preferred_username: username,
+          // preferred_username: username,
         },
       });
-      console.log(`user =>`, user);
+      // console.log(`user =>`, user);
 
       //   saveDateToStorage(response.data.idToken, response.data.refreshToken);
 

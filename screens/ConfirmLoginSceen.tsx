@@ -40,7 +40,7 @@ const ConfirmLoginSceen = ({
     const { username, code } = data;
     try {
       await dispatch(authActions.confirm(username, code));
-      // navigation.navigate('Home');
+      navigation.navigate('Home');
     } catch (error) {
       console.log(`error =>`, error);
     }

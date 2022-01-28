@@ -20,6 +20,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   label,
   errors,
 }) => {
+  console.log(`errors =>`, errors);
   return (
     <>
       <Text style={styles.label}>{label}</Text>
@@ -29,8 +30,8 @@ const CustomInput: React.FC<CustomInputProps> = ({
           render={({ field: { value, onChange } }) => (
             <TextInput
               placeholder={placeholder}
-              value={value}
-              onChangeText={onChange}
+              // value={value}
+              // onChangeText={onChange}
               style={styles.input}
             />
           )}

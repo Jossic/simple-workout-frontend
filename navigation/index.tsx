@@ -21,6 +21,8 @@ import AuthScreen from '../screens/AuthScreen';
 import ConfirmLoginSceen from '../screens/ConfirmLoginSceen';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
+import SignInScreen from '../screens/SignInScreen';
+import SignUpScreen from '../screens/SignUpScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import {
@@ -37,8 +39,13 @@ const AuthStack = createStackNavigator<AuthStackParamList>();
 const AuthenticatorStackNavigator = () => (
   <AuthStack.Navigator>
     <AuthStack.Screen
-      name="Authentication"
-      component={AuthScreen}
+      name="SignUp"
+      component={SignUpScreen}
+      options={{ headerShown: false }}
+    />
+    <AuthStack.Screen
+      name="SignIn"
+      component={SignInScreen}
       options={{ headerShown: false }}
     />
     <AuthStack.Screen

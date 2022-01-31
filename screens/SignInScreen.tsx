@@ -72,7 +72,7 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
 
   console.log(`response =>`, response);
   console.log(`request =>`, request);
-  console.log(`promptAsync =>`, promptAsync);
+  // console.log(`promptAsync =>`, promptAsync);
 
   React.useEffect(() => {
     if (response?.type === 'success') {

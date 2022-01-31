@@ -23,6 +23,23 @@ import * as authActions from '../store/actions/authActions';
 import Colors from '../constants/Colors';
 import { AuthProps } from '../types/auth';
 
+import * as WebBrowser from 'expo-web-browser';
+import { ResponseType } from 'expo-auth-session';
+import * as Google from 'expo-auth-session/providers/google';
+import { initializeApp } from 'firebase/app';
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithCredential,
+} from 'firebase/auth';
+
+// Initialize Firebase
+initializeApp({
+  /* Config */
+});
+
+WebBrowser.maybeCompleteAuthSession();
+
 const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -46,6 +63,24 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
   } = useForm<AuthProps>({
     resolver: yupResolver(validationSchema),
   });
+
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    clientId:
+      '919370685993-ntup1fltq6ar28largad5jpvcd1f4bni.apps.googleusercontent.com',
+  });
+
+  console.log(`response =>`, response);
+
+  React.useEffect(() => {
+    if (response?.type === 'success') {
+      const { id_token } = response.params;
+
+      const auth = getAuth();
+      const provider = new GoogleAuthProvider();
+      const credential = provider.credential(id_token);
+      signInWithCredential(auth, credential);
+    }
+  }, [response]);
 
   const onSubmit: SubmitHandler<AuthProps> = async (data) => {
     const { email, password } = data;

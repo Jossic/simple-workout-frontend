@@ -20,9 +20,6 @@ declare global {
 export type AuthStackParamList = {
   SignUp: undefined;
   SignIn: undefined;
-  ConfirmLogin: {
-    username: string;
-  };
   Home: undefined;
 };
 

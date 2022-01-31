@@ -11,9 +11,8 @@ export const AUTHENTICATE = 'AUTHENTICATE';
 export const LOGOUT = 'LOGOUT';
 export const SET_TRY_LOGIN = 'SET_TRY_LOGIN';
 export const FETCH_REFRESH_TOKEN = 'FETCH_REFRESH_TOKEN';
-export const CONFIRM = 'CONFIRM';
 
-export const signup = (username: string, email: string, password: string) => {
+export const signup = (email: string, password: string) => {
   return async (dispatch: Dispatch) => {
     await axios
       .post(

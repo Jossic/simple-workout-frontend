@@ -26,7 +26,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export type SignUpScreenProps = {
   email: string;
-  username: string;
   password: string;
   repeatPassword: string;
 };
@@ -36,7 +35,7 @@ const SignUpScreen = ({ navigation }: AuthStackScreenProps<'SignUp'>) => {
     email: Yup.string()
       .email('Merci de saisir un mail valide')
       .required('Veuillez renseigner votre email'),
-    username: Yup.string().required('Veuillez renseigner votre nom'),
+
     password: Yup.string()
       .min(8, 'Saisir au moins 8 caractères')
       .matches(
@@ -62,11 +61,20 @@ const SignUpScreen = ({ navigation }: AuthStackScreenProps<'SignUp'>) => {
   });
 
   const onSubmit: SubmitHandler<SignUpScreenProps> = async (data) => {
-    const { email, username, password, repeatPassword } = data;
+    const { email, password } = data;
     try {
-      await dispatch(authActions.signup(username, email, password));
+      await dispatch(authActions.signup(email, password));
+      navigation.navigate('Home');
     } catch (error) {
-      Alert.alert('Action impossible', error.message);
+      switch (error.message) {
+        case 'EMAIL_EXISTS':
+          Alert.alert('Inscription', 'Cet email est déja utilisé.');
+          break;
+
+        default:
+          Alert.alert('Action impossible', 'Une erreur est survenue.');
+          break;
+      }
     }
   };
 
@@ -86,12 +94,6 @@ const SignUpScreen = ({ navigation }: AuthStackScreenProps<'SignUp'>) => {
             </View>
 
             <View style={[styles.form, { marginTop: 30 }, tw``]}>
-              <CustomInput
-                fieldName={'username'}
-                control={control}
-                placeholder="Nom d'utilisateur..."
-                label="Nom d'utilisateur"
-              />
               <CustomInput
                 fieldName={'email'}
                 control={control}

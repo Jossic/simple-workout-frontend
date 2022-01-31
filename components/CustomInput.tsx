@@ -10,11 +10,11 @@ import Colors from '../constants/Colors';
 import { Control, Controller, FieldErrors, FieldValues } from 'react-hook-form';
 import { SignUpScreenProps } from '../screens/SignUpScreen';
 import tw from 'tailwind-react-native-classnames';
-import { ConfirmLoginSceenProps } from '../screens/ConfirmLoginSceen';
+import { SignInScreenProps } from '../screens/SignInScreen';
 
 type CustomInputProps = {
-  fieldName: 'email' | 'username' | 'password' | 'repeatPassword' | 'code';
-  control: Control<SignUpScreenProps> | Control<ConfirmLoginSceenProps>;
+  fieldName: 'email' | 'password' | 'repeatPassword' | 'code';
+  control: Control<SignUpScreenProps> | Control<SignInScreenProps> | undefined;
   placeholder?: string;
   label?: string;
   errorDetails?: string;

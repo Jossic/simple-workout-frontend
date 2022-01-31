@@ -3,6 +3,7 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   Alert,
+  Button,
   Dimensions,
   KeyboardAvoidingView,
   Platform,
@@ -70,6 +71,8 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
   });
 
   console.log(`response =>`, response);
+  console.log(`request =>`, request);
+  console.log(`promptAsync =>`, promptAsync);
 
   React.useEffect(() => {
     if (response?.type === 'success') {
@@ -119,6 +122,13 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
 
             <View style={[styles.logView, tw``]}>
               <Text style={[styles.log, tw``]}>Se connecter</Text>
+              <Button
+                disabled={!request}
+                title="Connexion"
+                onPress={() => {
+                  promptAsync();
+                }}
+              />
             </View>
 
             <View style={[styles.form, { marginTop: 30 }, tw``]}>

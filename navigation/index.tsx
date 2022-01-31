@@ -66,7 +66,7 @@ export default function Navigation({
   colorScheme: ColorSchemeName;
 }) {
   const didTryAutoLogin = useSelector((state) => {
-    console.log(`state =>`, state);
+    // console.log(`state =>`, state);
     return state.auth.didTryAutoLogin;
   });
   const isAuth = !!useSelector((state) => state.auth.userId);

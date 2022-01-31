@@ -25,6 +25,8 @@ import CustomInput from '../components/CustomInput';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AuthProps } from '../types/auth';
 
+import * as Google from 'expo-google-app-auth';
+
 const SignUpScreen = ({ navigation }: AuthStackScreenProps<'SignUp'>) => {
   const validationSchema = Yup.object({
     email: Yup.string()

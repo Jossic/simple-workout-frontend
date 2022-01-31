@@ -39,6 +39,9 @@ export type RootTabParamList = {
   // Exercice: undefined;
   Settings: undefined;
 };
+export type StartupParamList = {
+  Startup: undefined;
+};
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
   CompositeScreenProps<

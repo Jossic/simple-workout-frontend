@@ -97,15 +97,10 @@ export const fetchRefreshToken = (refreshToken) => {
 };
 
 export const logout = async () => {
-  try {
-    await Auth.signOut();
-    AsyncStorage.removeItem('userData');
-    return {
-      type: LOGOUT,
-    };
-  } catch (error) {
-    console.log('error signing out: ', error);
-  }
+  AsyncStorage.removeItem('userData');
+  return {
+    type: LOGOUT,
+  };
 };
 
 const saveDateToStorage = (token, refreshToken) => {

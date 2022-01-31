@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Auth } from 'aws-amplify';
+
 import axios from 'axios';
 import { Dispatch } from 'redux';
 

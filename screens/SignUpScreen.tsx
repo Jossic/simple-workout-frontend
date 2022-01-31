@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Alert,
+  Button,
   Dimensions,
   KeyboardAvoidingView,
   Platform,
@@ -16,6 +17,8 @@ import Colors from '../constants/Colors';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import tw from 'tailwind-react-native-classnames';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
 
 // Redux
 import { useDispatch } from 'react-redux';
@@ -25,7 +28,7 @@ import CustomInput from '../components/CustomInput';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AuthProps } from '../types/auth';
 
-import * as Google from 'expo-google-app-auth';
+WebBrowser.maybeCompleteAuthSession();
 
 const SignUpScreen = ({ navigation }: AuthStackScreenProps<'SignUp'>) => {
   const validationSchema = Yup.object({
@@ -56,6 +59,19 @@ const SignUpScreen = ({ navigation }: AuthStackScreenProps<'SignUp'>) => {
   } = useForm<AuthProps>({
     resolver: yupResolver(validationSchema),
   });
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+    iosClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+    androidClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+    webClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+  });
+
+  React.useEffect(() => {
+    if (response?.type === 'success') {
+      const { authentication } = response;
+    }
+  }, [response]);
 
   const onSubmit: SubmitHandler<AuthProps> = async (data) => {
     const { email, password } = data;
@@ -88,6 +104,13 @@ const SignUpScreen = ({ navigation }: AuthStackScreenProps<'SignUp'>) => {
 
             <View style={[styles.logView, tw``]}>
               <Text style={[styles.log, tw``]}>Inscription</Text>
+              <Button
+                disabled={!request}
+                title="Login"
+                onPress={() => {
+                  promptAsync();
+                }}
+              />
             </View>
 
             <View style={[styles.form, { marginTop: 30 }, tw``]}>

@@ -1,45 +1,72 @@
-import React from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  KeyboardTypeOptions,
+} from 'react-native';
 import Colors from '../constants/Colors';
-import { Control, Controller, FieldValues } from 'react-hook-form';
+import { Control, Controller, FieldErrors, FieldValues } from 'react-hook-form';
+import { SignUpScreenProps } from '../screens/SignUpScreen';
 
-interface CustomInputProps {
+type CustomInputProps = {
   name: string;
-  control: Control<FieldValues, object> | undefined;
-  placeholder: string;
-  rules: object;
-  label: string;
-  errors: object;
-}
+  control: Control<SignUpScreenProps>;
+  placeholder?: string;
+  label?: string;
+  errorDetails?: string;
+  keyboardType?: KeyboardTypeOptions;
+  secureTextEntry?: boolean;
+  autoFocus?: boolean;
+  autoCorrect?: boolean;
+};
 
 const CustomInput: React.FC<CustomInputProps> = ({
   name,
   control,
   placeholder,
-  rules,
   label,
-  errors,
+  keyboardType = 'default',
+  secureTextEntry = false,
+  autoFocus = false,
+  autoCorrect = false,
 }) => {
-  console.log(`errors =>`, errors);
+  const [errorText, setErrorText] = useState<string>('');
   return (
     <>
       <Text style={styles.label}>{label}</Text>
-      <View style={styles.inputContainer}>
-        <Controller
-          control={control}
-          render={({ field: { value, onChange } }) => (
-            <TextInput
-              placeholder={placeholder}
-              // value={value}
-              // onChangeText={onChange}
-              style={styles.input}
-            />
-          )}
-          name={name}
-          rules={rules}
-        />
-      </View>
-      {errors[name] && <Text style={styles.error}>{errors[name].message}</Text>}
+      <Controller
+        name={name}
+        control={control}
+        render={({ field: { value, onChange }, fieldState: { error } }) => {
+          if (error) {
+            setErrorText(error.message);
+          } else {
+            setErrorText('');
+          }
+
+          return (
+            <View
+              style={
+                !error ? styles.inputContainer : styles.inputContainerError
+              }
+            >
+              <TextInput
+                placeholder={placeholder}
+                value={value}
+                onChangeText={onChange}
+                style={styles.input}
+                keyboardType={keyboardType}
+                secureTextEntry={secureTextEntry}
+                autoFocus={autoFocus}
+                autoCorrect={autoCorrect}
+              />
+            </View>
+          );
+        }}
+      />
+      {errorText !== '' && <Text style={styles.error}>{errorText}</Text>}
     </>
   );
 };
@@ -61,6 +88,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 15,
     borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
+    width: '100%',
+  },
+  inputContainerError: {
+    backgroundColor: '#FFC0CB',
+    padding: 15,
+    borderRadius: 15,
+    borderColor: 'red',
+    borderWidth: 2,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

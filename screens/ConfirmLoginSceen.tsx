@@ -2,6 +2,7 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -15,17 +16,16 @@ import { AuthStackScreenProps } from '../types';
 import { useDispatch } from 'react-redux';
 import * as authActions from '../store/actions/authActions';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRoute } from '@react-navigation/native';
 
-interface ConfirmLoginSceenProps {
+export interface ConfirmLoginSceenProps {
   username: string;
   code: string;
 }
 
 const ConfirmLoginSceen = ({
   navigation,
+  route,
 }: AuthStackScreenProps<'ConfirmLogin'>) => {
-  const route = useRoute();
   const {
     control,
     handleSubmit,
@@ -36,11 +36,11 @@ const ConfirmLoginSceen = ({
   const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<ConfirmLoginSceenProps> = async (data) => {
-    console.log(`data =>`, data);
+    // console.log(`data =>`, data);
     const { username, code } = data;
     try {
       await dispatch(authActions.confirm(username, code));
-      navigation.navigate('Home');
+      navigation.navigate('SignIn');
     } catch (error) {
       console.log(`error =>`, error);
     }
@@ -55,19 +55,15 @@ const ConfirmLoginSceen = ({
         <View style={styles.container}>
           <CustomInput
             label={"Nom d'utilisateur"}
-            name={'username'}
+            fieldName={'username'}
             control={control}
             placeholder={"Nom d'utilisateur"}
-            rules={{}}
-            errors={errors}
           />
           <CustomInput
             label={'Votre code'}
-            name={'code'}
+            fieldName={'code'}
             control={control}
             placeholder={'Votre code'}
-            rules={{}}
-            errors={errors}
           />
           <TouchableOpacity
             activeOpacity={0.8}

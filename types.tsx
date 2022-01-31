@@ -20,11 +20,14 @@ declare global {
 export type AuthStackParamList = {
   SignUp: undefined;
   SignIn: undefined;
-  ConfirmLogin: undefined;
+  ConfirmLogin: {
+    username: string;
+  };
+  Home: undefined;
 };
 
 export type RootStackParamList = {
-  Authentication: undefined;
+  Home: undefined;
 };
 
 export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> =

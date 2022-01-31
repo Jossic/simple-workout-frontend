@@ -5,16 +5,19 @@ import {
   SET_TRY_LOGIN,
   FETCH_REFRESH_TOKEN,
   LOGOUT,
-  CONFIRM,
 } from '../actions/authActions';
 
-export interface Auth {
-  auth: {
-    userId: string;
-    token: string;
-    didTryAutoLogin: boolean;
-  };
-}
+export type Auth = {
+  userId: string | null;
+  token: string | null;
+  didTryAutoLogin: boolean;
+};
+
+type Action = {
+  type: string;
+  userId: string;
+  token: string;
+};
 
 const initialState = {
   userId: null,
@@ -22,7 +25,7 @@ const initialState = {
   didTryAutoLogin: false,
 };
 
-export default (state = initialState, action) => {
+export default (state: Auth = initialState, action: Action) => {
   switch (action.type) {
     case START_LOADING:
       return {
@@ -58,12 +61,6 @@ export default (state = initialState, action) => {
         userId: null,
         token: null,
       };
-    // case CONFIRM:
-    //   return {
-    //     ...state,
-    //     userId: null,
-    //     token: null,
-    //   };
     default:
       return state;
   }

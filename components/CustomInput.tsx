@@ -9,10 +9,12 @@ import {
 import Colors from '../constants/Colors';
 import { Control, Controller, FieldErrors, FieldValues } from 'react-hook-form';
 import { SignUpScreenProps } from '../screens/SignUpScreen';
+import tw from 'tailwind-react-native-classnames';
+import { ConfirmLoginSceenProps } from '../screens/ConfirmLoginSceen';
 
 type CustomInputProps = {
-  name: string;
-  control: Control<SignUpScreenProps>;
+  fieldName: 'email' | 'username' | 'password' | 'repeatPassword' | 'code';
+  control: Control<SignUpScreenProps> | Control<ConfirmLoginSceenProps>;
   placeholder?: string;
   label?: string;
   errorDetails?: string;
@@ -23,7 +25,7 @@ type CustomInputProps = {
 };
 
 const CustomInput: React.FC<CustomInputProps> = ({
-  name,
+  fieldName,
   control,
   placeholder,
   label,
@@ -32,12 +34,12 @@ const CustomInput: React.FC<CustomInputProps> = ({
   autoFocus = false,
   autoCorrect = false,
 }) => {
-  const [errorText, setErrorText] = useState<string>('');
+  const [errorText, setErrorText] = useState<string | undefined>('');
   return (
     <>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, tw``]}>{label}</Text>
       <Controller
-        name={name}
+        name={fieldName}
         control={control}
         render={({ field: { value, onChange }, fieldState: { error } }) => {
           if (error) {
@@ -56,7 +58,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
                 placeholder={placeholder}
                 value={value}
                 onChangeText={onChange}
-                style={styles.input}
+                style={[styles.input, tw``]}
                 keyboardType={keyboardType}
                 secureTextEntry={secureTextEntry}
                 autoFocus={autoFocus}
@@ -66,7 +68,9 @@ const CustomInput: React.FC<CustomInputProps> = ({
           );
         }}
       />
-      {errorText !== '' && <Text style={styles.error}>{errorText}</Text>}
+      {errorText !== '' && (
+        <Text style={[styles.error, tw``]}>{errorText}</Text>
+      )}
     </>
   );
 };

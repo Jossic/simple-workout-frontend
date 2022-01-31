@@ -52,7 +52,7 @@ export const signin = (email: string, password: string) => {
       )
       .then((response) => {
         saveDateToStorage(response.data.idToken, response.data.refreshToken);
-
+        console.log(`signin =>`);
         dispatch({
           type: AUTHENTICATE,
           userId: response.data.localId,

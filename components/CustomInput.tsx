@@ -8,13 +8,13 @@ import {
 } from 'react-native';
 import Colors from '../constants/Colors';
 import { Control, Controller, FieldErrors, FieldValues } from 'react-hook-form';
-import { SignUpScreenProps } from '../screens/SignUpScreen';
 import tw from 'tailwind-react-native-classnames';
-import { SignInScreenProps } from '../screens/SignInScreen';
+import { AuthProps } from '../types/auth';
 
 type CustomInputProps = {
-  fieldName: 'email' | 'password' | 'repeatPassword' | 'code';
-  control: Control<SignUpScreenProps> | Control<SignInScreenProps> | undefined;
+  fieldName: 'email' | 'password' | 'repeatPassword';
+  control: Control<AuthProps>;
+
   placeholder?: string;
   label?: string;
   errorDetails?: string;

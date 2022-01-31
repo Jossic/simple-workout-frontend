@@ -14,13 +14,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import AuthScreen from '../screens/AuthScreen';
-import ConfirmLoginSceen from '../screens/ConfirmLoginSceen';
-import ModalScreen from '../screens/ModalScreen';
-import NotFoundScreen from '../screens/NotFoundScreen';
+import HomeScreen from '../screens/HomeScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import TabOneScreen from '../screens/TabOneScreen';
@@ -30,48 +29,64 @@ import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
+  StartupParamList,
 } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import * as Notifications from 'expo-notifications';
+import StartupScreen from '../screens/StartupScreen';
 
 // Auth stack navigator
-const AuthStack = createStackNavigator<AuthStackParamList>();
+const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 
-const AuthenticatorStackNavigator = () => (
-  <AuthStack.Navigator>
-    <AuthStack.Screen
-      name="SignUp"
-      component={SignUpScreen}
-      options={{ headerShown: false }}
-    />
-    <AuthStack.Screen
-      name="SignIn"
-      component={SignInScreen}
-      options={{ headerShown: false }}
-    />
-    <AuthStack.Screen
-      name="ConfirmLogin"
-      component={ConfirmLoginSceen}
-      options={{ headerShown: false }}
-    />
-    <Stack.Screen
-      name="Home"
-      component={BottomTabNavigator}
-      options={{ headerShown: false }}
-    />
-  </AuthStack.Navigator>
-);
+const AuthenticatorStackNavigator = () => {
+  return (
+    <AuthStack.Navigator>
+      <AuthStack.Screen
+        name="SignIn"
+        component={SignInScreen}
+        options={{ headerShown: false }}
+      />
+      <AuthStack.Screen
+        name="SignUp"
+        component={SignUpScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+    </AuthStack.Navigator>
+  );
+};
 
 export default function Navigation({
   colorScheme,
 }: {
   colorScheme: ColorSchemeName;
 }) {
+  const didTryAutoLogin = useSelector((state) => {
+    console.log(`state =>`, state);
+    return state.auth.didTryAutoLogin;
+  });
+  const isAuth = !!useSelector((state) => state.auth.userId);
+
+  const getDeviceToken = async () => {
+    const deviceToken = await Notifications.getExpoPushTokenAsync();
+  };
+
+  if (isAuth) {
+    // Recup le token de l'appareil
+    getDeviceToken();
+  }
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
     >
-      <AuthenticatorStackNavigator />
+      {didTryAutoLogin && !isAuth && <AuthenticatorStackNavigator />}
+      {didTryAutoLogin && isAuth && <RootNavigator />}
+      {!didTryAutoLogin && <StartupStackNavigator />}
     </NavigationContainer>
   );
 }
@@ -105,23 +120,37 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
+        name="Home"
+        component={HomeScreen}
+        options={({ navigation }: RootTabScreenProps<'Home'>) => ({
+          title: 'Accueil',
         })}
       />
-      <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+      {/* <BottomTab.Screen
+        name="Workout"
+        component={WorkoutScreen}
         options={{
-          title: 'Tab Two',
+          title: 'Workout',
+        }}
+      />
+      <BottomTab.Screen
+        name="Exercice"
+        component={ExerciceScreen}
+        options={{
+          title: 'Exercice',
+        }}
+      /> */}
+      <BottomTab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          title: 'Settings',
         }}
       />
     </BottomTab.Navigator>
@@ -137,3 +166,18 @@ function BottomTabNavigator() {
 // }) {
 //   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 // }
+
+// Startup stack navigator
+const StartupStack = createNativeStackNavigator<StartupParamList>();
+
+export const StartupStackNavigator = () => {
+  return (
+    <StartupStack.Navigator>
+      <StartupStack.Screen
+        name="Startup"
+        component={StartupScreen}
+        options={{ headerShown: false }}
+      />
+    </StartupStack.Navigator>
+  );
+};

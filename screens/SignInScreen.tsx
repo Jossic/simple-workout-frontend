@@ -21,11 +21,7 @@ import tw from 'tailwind-react-native-classnames';
 
 import * as authActions from '../store/actions/authActions';
 import Colors from '../constants/Colors';
-
-export interface SignInScreenProps {
-  email: string;
-  password: string;
-}
+import { AuthProps } from '../types/auth';
 
 const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
   const validationSchema = Yup.object({
@@ -47,19 +43,25 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInScreenProps>({
+  } = useForm<AuthProps>({
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<SignInScreenProps> = async (data) => {
+  const onSubmit: SubmitHandler<AuthProps> = async (data) => {
     const { email, password } = data;
     try {
-      await dispatch(authActions.signup(email, password));
+      await dispatch(authActions.signin(email, password));
       navigation.navigate('Home');
     } catch (error) {
       switch (error.message) {
-        case 'EMAIL_EXISTS':
-          Alert.alert('Inscription', 'Cet email est déja utilisé.');
+        case 'EMAIL_NOT_FOUND':
+          Alert.alert('Identifiants et/ou mot de passe invalide', undefined);
+          break;
+        case 'INVALID_PASSWORD':
+          Alert.alert('Identifiants et/ou mot de passe invalide', undefined);
+          break;
+        case 'USER_DISABLED':
+          Alert.alert('Votre compte a été bloqué', undefined);
           break;
 
         default:
@@ -81,7 +83,7 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
             <Text style={[styles.slogan, tw``]}>Suivez tous vos workouts</Text>
 
             <View style={[styles.logView, tw``]}>
-              <Text style={[styles.log, tw``]}>Inscription</Text>
+              <Text style={[styles.log, tw``]}>Se connecter</Text>
             </View>
 
             <View style={[styles.form, { marginTop: 30 }, tw``]}>
@@ -110,7 +112,7 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
                 activeOpacity={0.8}
                 onPress={handleSubmit(onSubmit)}
               >
-                <Text style={[styles.submitText, tw``]}>Créer un compte</Text>
+                <Text style={[styles.submitText, tw``]}>Se connecter</Text>
               </TouchableOpacity>
             </LinearGradient>
 
@@ -120,7 +122,7 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
               onPress={() => navigation.navigate('SignUp')}
             >
               <Text style={[styles.switchButton, tw``]}>
-                Déja un compte ? Se connecter
+                Pas de compte ? Créer un compte
               </Text>
             </TouchableOpacity>
           </View>

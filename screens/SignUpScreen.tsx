@@ -11,24 +11,19 @@ import {
   View,
 } from 'react-native';
 import { AuthStackScreenProps } from '../types';
-import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import Colors from '../constants/Colors';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import tw from 'tailwind-react-native-classnames';
 
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as authActions from '../store/actions/authActions';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomInput from '../components/CustomInput';
 import { LinearGradient } from 'expo-linear-gradient';
-
-export type SignUpScreenProps = {
-  email: string;
-  password: string;
-  repeatPassword: string;
-};
+import { AuthProps } from '../types/auth';
 
 const SignUpScreen = ({ navigation }: AuthStackScreenProps<'SignUp'>) => {
   const validationSchema = Yup.object({
@@ -56,11 +51,11 @@ const SignUpScreen = ({ navigation }: AuthStackScreenProps<'SignUp'>) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpScreenProps>({
+  } = useForm<AuthProps>({
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit: SubmitHandler<SignUpScreenProps> = async (data) => {
+  const onSubmit: SubmitHandler<AuthProps> = async (data) => {
     const { email, password } = data;
     try {
       await dispatch(authActions.signup(email, password));

@@ -71,7 +71,6 @@ const AuthScreen = ({ navigation }: AuthStackScreenProps<'Authentication'>) => {
       // Inscription
       try {
         await dispatch(authActions.signup(username, email, password));
-        navigation.navigate('ConfirmLogin', { username });
       } catch (error) {
         console.log(`error =>`, error.message);
         Alert.alert('Action impossible', error.message);

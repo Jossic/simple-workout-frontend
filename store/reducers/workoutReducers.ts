@@ -31,25 +31,25 @@ export default (state: Auth = initialState, action: Action) => {
         exercices: [action.exercice, ...state.exercices],
       };
     case GET_EXERCICES:
-      const projects = [...action.projects];
+      const exercices = [...action.exercices];
 
-      projects.sort((a, b) => {
+      exercices.sort((a, b) => {
         let dateA = moment(a.createdAd),
           dateB = moment(b.createdAd);
         return dateB - dateA;
       });
       return {
         ...state,
-        projects,
+        exercices,
       };
     case DELETE_EXERCICE:
-      let currentProject = [...state.projects];
-      currentProject = currentProject.filter(
-        (project) => project.id !== action.projectId
+      let currentExercice = [...state.exercices];
+      currentExercice = currentExercice.filter(
+        (exercice) => exercice.id !== action.exerciceId
       );
       return {
         ...state,
-        projects: [...currentProject],
+        exercices: [...currentExercice],
       };
     case START_LOADING:
       return {

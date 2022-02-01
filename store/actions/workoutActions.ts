@@ -57,3 +57,13 @@ export const getExercices = (userId, token) => {
       });
   };
 };
+
+export const deleteExercice = (exerciceId, userId, token) => {
+  return (dispatch: Dispatch) => {
+    axios
+      .delete(`/exercices/${userId}/${exerciceId}.json?auth=${token}`)
+      .then((response) => {
+        dispatch({ type: DELETE_EXERCICE, exerciceId });
+      });
+  };
+};

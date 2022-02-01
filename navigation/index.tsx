@@ -22,8 +22,6 @@ import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
 import {
   AuthStackParamList,
   RootStackParamList,
@@ -34,6 +32,9 @@ import {
 import LinkingConfiguration from './LinkingConfiguration';
 import * as Notifications from 'expo-notifications';
 import StartupScreen from '../screens/StartupScreen';
+import WorkoutScreen from '../screens/WorkoutScreen';
+import ExerciceScreen from '../screens/ExerciceScreen';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Auth stack navigator
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
@@ -121,18 +122,34 @@ function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}
+      screenOptions={({ route }) => ({
+        tabBarActiveTintColor: Colors.primary,
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Workout') {
+            iconName = focused ? 'barbell' : 'barbell-outline';
+          } else if (route.name === 'Exercice') {
+            iconName = focused ? 'bicycle' : 'bicycle-outline';
+          } else if (route.name === 'Settings') {
+            iconName = focused ? 'settings' : 'settings-outline';
+          }
+
+          return <Ionicons name={iconName} color={color} size={size} />;
+        },
+      })}
     >
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
         options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Accueil',
+          // Ajouter bouton avec profil
         })}
       />
-      {/* <BottomTab.Screen
+      <BottomTab.Screen
         name="Workout"
         component={WorkoutScreen}
         options={{
@@ -145,7 +162,7 @@ function BottomTabNavigator() {
         options={{
           title: 'Exercice',
         }}
-      /> */}
+      />
       <BottomTab.Screen
         name="Settings"
         component={SettingsScreen}

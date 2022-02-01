@@ -24,23 +24,6 @@ import * as authActions from '../store/actions/authActions';
 import Colors from '../constants/Colors';
 import { AuthProps } from '../types/auth';
 
-import * as WebBrowser from 'expo-web-browser';
-import { ResponseType } from 'expo-auth-session';
-import * as Google from 'expo-auth-session/providers/google';
-import { initializeApp } from 'firebase/app';
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithCredential,
-} from 'firebase/auth';
-
-// Initialize Firebase
-initializeApp({
-  /* Config */
-});
-
-WebBrowser.maybeCompleteAuthSession();
-
 const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -64,26 +47,6 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
   } = useForm<AuthProps>({
     resolver: yupResolver(validationSchema),
   });
-
-  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    clientId:
-      '919370685993-ntup1fltq6ar28largad5jpvcd1f4bni.apps.googleusercontent.com',
-  });
-
-  console.log(`response =>`, response);
-  console.log(`request =>`, request);
-  // console.log(`promptAsync =>`, promptAsync);
-
-  React.useEffect(() => {
-    if (response?.type === 'success') {
-      const { id_token } = response.params;
-
-      const auth = getAuth();
-      const provider = new GoogleAuthProvider();
-      const credential = provider.credential(id_token);
-      signInWithCredential(auth, credential);
-    }
-  }, [response]);
 
   const onSubmit: SubmitHandler<AuthProps> = async (data) => {
     const { email, password } = data;
@@ -109,6 +72,15 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
     }
   };
 
+  const handleGooglePress = async () => {
+    try {
+      await dispatch(authActions.signinGoogle());
+      navigation.navigate('Home');
+    } catch (error) {
+      Alert.alert('Action impossible', 'Une erreur est survenue.');
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -119,16 +91,9 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
           <View style={[styles.container2, tw``]}>
             <Text style={[styles.title, tw``]}>Simple-Workout</Text>
             <Text style={[styles.slogan, tw``]}>Suivez tous vos workouts</Text>
-
             <View style={[styles.logView, tw``]}>
               <Text style={[styles.log, tw``]}>Se connecter</Text>
-              <Button
-                disabled={!request}
-                title="Connexion"
-                onPress={() => {
-                  promptAsync();
-                }}
-              />
+              <Button title="Google" onPress={() => handleGooglePress()} />
             </View>
 
             <View style={[styles.form, { marginTop: 30 }, tw``]}>
@@ -160,7 +125,6 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
                 <Text style={[styles.submitText, tw``]}>Se connecter</Text>
               </TouchableOpacity>
             </LinearGradient>
-
             <TouchableOpacity
               activeOpacity={0.8}
               // style={styles.submit}

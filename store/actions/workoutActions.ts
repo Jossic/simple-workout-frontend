@@ -30,3 +30,30 @@ export const addExercice = (exercice, userId, token) => {
       });
   };
 };
+
+export const getExercices = (userId, token) => {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: START_LOADING });
+    axios
+      .get(`/exercices/${userId}.json?auth=${token}`)
+      .then((response) => {
+        const exercices = [];
+        for (const key in response.data) {
+          exercices.push({
+            id: key,
+            content: response.data[key].content,
+            name: response.data[key].name,
+            description: response.data[key].description,
+            variant: response.data[key].variant,
+            logo: response.data[key].logo,
+          });
+        }
+        dispatch({ type: GET_EXERCICES, exercices });
+        dispatch({ type: END_LOADING });
+      })
+      .catch((error) => {
+        console.log(`catch error =>`, error);
+        dispatch({ type: END_LOADING });
+      });
+  };
+};

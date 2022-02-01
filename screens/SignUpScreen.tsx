@@ -22,7 +22,7 @@ import tw from 'tailwind-react-native-classnames';
 import { useDispatch } from 'react-redux';
 import * as authActions from '../store/actions/authActions';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import CustomInput from '../components/CustomInput';
+import CustomInput from '../components/CustomAuthInput';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AuthProps } from '../types/auth';
 

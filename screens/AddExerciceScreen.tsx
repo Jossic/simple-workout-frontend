@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
+  KeyboardAvoidingView,
   Platform,
   SafeAreaView,
   StyleSheet,
@@ -12,9 +13,11 @@ import {
 import { Ionicons } from 'react-native-vector-icons';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import * as globalActions from '../store/actions/index';
+import * as workoutActions from '../store/actions/workoutActions';
 import * as ImagePicker from 'expo-image-picker';
 import tw from 'tailwind-react-native-classnames';
+import Colors from '../constants/Colors';
+import CustomWorkoutInput from '../components/CustomWorkoutInput';
 
 const AddExerciceScreen = ({ navigation }) => {
   const {
@@ -25,8 +28,8 @@ const AddExerciceScreen = ({ navigation }) => {
   const [image, setImage] = useState();
 
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state.userId);
-  const token = useSelector((state) => state.token);
+  const userId = useSelector((state) => state.auth.userId);
+  const token = useSelector((state) => state.auth.token);
 
   // Fonction
   const onSubmit = (data) => {
@@ -38,12 +41,14 @@ const AddExerciceScreen = ({ navigation }) => {
       image64 = `data:image/${fileType};base64,${image.base64}`;
     }
 
-    const project = {
+    const exercice = {
       name: data.name,
+      description: data.description,
+      variant: data.variant,
       logo: image64,
     };
 
-    dispatch(globalActions.addProject(project, userId, token));
+    dispatch(workoutActions.addExercice(exercice, userId, token));
     navigation.goBack();
   };
 
@@ -75,16 +80,107 @@ const AddExerciceScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={[styles.container, tw`flex`]}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <Text>AddExerciceScreen</Text>
-      </SafeAreaView>
-    </View>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'android' ? 'height' : 'padding'}
+    >
+      <View style={[styles.container, tw`flex-1 items-center`]}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <Text style={tw`text-xl`}>Ajouter un exercice</Text>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            // style={styles.submit}
+            onPress={onPressPickerHandler}
+          >
+            <View
+              style={{
+                ...styles.inputContainer,
+                marginTop: 15,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Ionicons name="images" size={23} color={Colors.primary} />
+              <Text style={{ marginLeft: 15 }}>
+                {image ? 'Image selectionnée' : 'Ajouter une image'}
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          <CustomWorkoutInput
+            fieldName="name"
+            control={control}
+            placeholder="Nom de l'exercice"
+            label="Nom de l'exercice"
+            keyboardType="default"
+            autoFocus={true}
+            autoCorrect={false}
+          />
+          <CustomWorkoutInput
+            fieldName="variant"
+            control={control}
+            placeholder="Variante"
+            label="Variante"
+            keyboardType="default"
+            autoCorrect={false}
+          />
+          <CustomWorkoutInput
+            fieldName="description"
+            control={control}
+            placeholder="Descriptif"
+            label="Descriptif"
+            keyboardType="default"
+            autoCorrect={false}
+            multiline
+          />
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.submit}
+            onPress={handleSubmit(onSubmit)}
+          >
+            <Text style={styles.submitText}>Créer</Text>
+            <Ionicons name="arrow-forward" size={23} color="white" />
+          </TouchableOpacity>
+        </SafeAreaView>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
 export default AddExerciceScreen;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    backgroundColor: Colors.secondary,
+    paddingTop: 30,
+  },
+  inputContainer: {
+    backgroundColor: 'white',
+    padding: 15,
+    borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
+  },
+  submitText: {
+    color: 'white',
+    fontSize: 17,
+  },
+  submit: {
+    backgroundColor: Colors.primary,
+    padding: 10,
+    width: 130,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    alignSelf: 'center',
+    marginTop: 30,
+    borderRadius: 10,
+  },
 });

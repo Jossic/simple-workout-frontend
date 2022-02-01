@@ -1,10 +1,10 @@
 import {
-    END_LOADING,
-    START_LOADING,
-ADD_EXERCICE,
-GET_EXERCICES
-DELETE_EXERCICE
-  } from '../actions/workoutActions';
+  END_LOADING,
+  START_LOADING,
+  ADD_EXERCICE,
+  GET_EXERCICES,
+  DELETE_EXERCICE,
+} from '../actions/workoutActions';
 
 export type Workout = {
   userId: string | null;
@@ -16,6 +16,7 @@ type Action = {
   type: string;
   userId: string;
   token: string;
+  exercices: object;
 };
 
 const initialState = {
@@ -27,7 +28,7 @@ export default (state: Auth = initialState, action: Action) => {
     case ADD_EXERCICE:
       return {
         ...state,
-        projects: [action.project, ...state.projects],
+        exercices: [action.exercice, ...state.exercices],
       };
     case GET_EXERCICES:
       const projects = [...action.projects];

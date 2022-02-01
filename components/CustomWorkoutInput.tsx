@@ -11,7 +11,7 @@ import { Control, Controller, FieldErrors, FieldValues } from 'react-hook-form';
 import tw from 'tailwind-react-native-classnames';
 import { AuthProps } from '../types/auth';
 
-type CustomInputProps = {
+type CustomWorkoutInputProps = {
   fieldName: 'email' | 'password' | 'repeatPassword';
   control: Control<AuthProps>;
 
@@ -22,9 +22,10 @@ type CustomInputProps = {
   secureTextEntry?: boolean;
   autoFocus?: boolean;
   autoCorrect?: boolean;
+  multiline?: boolean;
 };
 
-const CustomInput: React.FC<CustomInputProps> = ({
+const CustomWorkoutInput: React.FC<CustomWorkoutInputProps> = ({
   fieldName,
   control,
   placeholder,
@@ -33,6 +34,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   secureTextEntry = false,
   autoFocus = false,
   autoCorrect = false,
+  multiline = false,
 }) => {
   const [errorText, setErrorText] = useState<string | undefined>('');
   return (
@@ -62,6 +64,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
                 secureTextEntry={secureTextEntry}
                 autoFocus={autoFocus}
                 autoCorrect={autoCorrect}
+                multiline={multiline}
               />
             </View>
           );
@@ -74,7 +77,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   );
 };
 
-export default CustomInput;
+export default CustomWorkoutInput;
 
 const styles = StyleSheet.create({
   input: {

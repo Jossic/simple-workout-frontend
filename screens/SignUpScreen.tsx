@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
   },
   submit: {
     // backgroundColor: Colors.secondary,
+    zIndex: 10,
     padding: 10,
     width: 200,
     flexDirection: 'row',
@@ -203,7 +204,7 @@ const styles = StyleSheet.create({
   form: {
     marginTop: 30,
     padding: 30,
-    backgroundColor: Colors.ternary,
+    backgroundColor: Colors.secondary,
     borderRadius: 5,
     width: Dimensions.get('window').width * 0.85,
   },

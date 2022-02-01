@@ -5,6 +5,7 @@ import {
   Alert,
   Button,
   Dimensions,
+  ImageBackground,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
@@ -72,15 +73,6 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
     }
   };
 
-  const handleGooglePress = async () => {
-    try {
-      await dispatch(authActions.signinGoogle());
-      navigation.navigate('Home');
-    } catch (error) {
-      Alert.alert('Action impossible', 'Une erreur est survenue.');
-    }
-  };
-
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -88,15 +80,20 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
     >
       <View style={[styles.container, tw``]}>
         <SafeAreaView style={{ flex: 1 }}>
-          <View style={[styles.container2, tw``]}>
-            <Text style={[styles.title, tw``]}>Simple-Workout</Text>
-            <Text style={[styles.slogan, tw``]}>Suivez tous vos workouts</Text>
-            <View style={[styles.logView, tw``]}>
-              <Text style={[styles.log, tw``]}>Se connecter</Text>
-              <Button title="Google" onPress={() => handleGooglePress()} />
-            </View>
+          <ImageBackground
+            source={require('../assets/images/backGround.jpg')}
+            resizeMode="cover"
+            style={styles.image}
+          >
+            <View style={[styles.container2, tw``]}>
+              <Text style={[styles.title, tw``]}>Simple-Workout</Text>
+              <Text style={[styles.slogan, tw``]}>
+                Suivez tous vos workouts
+              </Text>
+              <View style={[styles.logView, tw``]}>
+                <Text style={[styles.log, tw``]}>Se connecter</Text>
+              </View>
 
-            <View style={[styles.form, { marginTop: 30 }, tw``]}>
               <CustomInput
                 fieldName={'email'}
                 control={control}
@@ -113,28 +110,29 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
                 placeholder="Mot de passe..."
                 label="Mot de passe"
               />
-            </View>
-            <LinearGradient
-              colors={Colors.linear}
-              style={[styles.submit, tw``]}
-            >
+
+              <LinearGradient
+                colors={Colors.linear}
+                style={[styles.submit, tw``]}
+              >
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={handleSubmit(onSubmit)}
+                >
+                  <Text style={[styles.submitText, tw``]}>Se connecter</Text>
+                </TouchableOpacity>
+              </LinearGradient>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={handleSubmit(onSubmit)}
+                // style={styles.submit}
+                onPress={() => navigation.navigate('SignUp')}
               >
-                <Text style={[styles.submitText, tw``]}>Se connecter</Text>
+                <Text style={[styles.switchButton, tw``]}>
+                  Pas de compte ? Créer un compte
+                </Text>
               </TouchableOpacity>
-            </LinearGradient>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              // style={styles.submit}
-              onPress={() => navigation.navigate('SignUp')}
-            >
-              <Text style={[styles.switchButton, tw``]}>
-                Pas de compte ? Créer un compte
-              </Text>
-            </TouchableOpacity>
-          </View>
+            </View>
+          </ImageBackground>
         </SafeAreaView>
       </View>
     </KeyboardAvoidingView>
@@ -146,43 +144,31 @@ export default SignInScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.primary,
-    paddingHorizontal: 25,
+    // backgroundColor: Colors.transparent,
+    // paddingHorizontal: 25,
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.7,
   },
   container2: {
     flex: 1,
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.transparent,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 25,
+    width: '100%',
   },
   title: {
     fontSize: 30,
     textTransform: 'uppercase',
-    color: 'white',
+    color: Colors.secondary,
     fontWeight: 'bold',
   },
   slogan: {
-    color: 'white',
+    color: Colors.secondary,
     paddingHorizontal: 15,
-  },
-  inputContainer: {
-    backgroundColor: 'white',
-    padding: 15,
-    borderRadius: 15,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
-    width: '100%',
-  },
-  input: {
-    maxHeight: 150,
-    fontSize: 16,
   },
   submitText: {
     color: Colors.primary,
@@ -199,22 +185,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     borderRadius: 10,
   },
-  form: {
-    marginTop: 30,
-    padding: 30,
-    backgroundColor: Colors.ternary,
-    borderRadius: 5,
-    width: Dimensions.get('window').width * 0.85,
-  },
-  label: {
-    marginBottom: 5,
-    color: Colors.primary,
-    fontWeight: 'bold',
-  },
-  error: {
-    color: 'red',
-    marginTop: 5,
-  },
+
   switchButton: {
     color: 'white',
     marginTop: 30,

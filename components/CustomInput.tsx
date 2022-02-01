@@ -47,7 +47,6 @@ const CustomInput: React.FC<CustomInputProps> = ({
           } else {
             setErrorText('');
           }
-
           return (
             <View
               style={
@@ -80,6 +79,8 @@ export default CustomInput;
 const styles = StyleSheet.create({
   input: {
     maxHeight: 150,
+    fontWeight: 'bold',
+    color: 'black',
     fontSize: 16,
   },
   label: {
@@ -89,34 +90,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   inputContainer: {
-    backgroundColor: 'white',
     padding: 15,
-    borderRadius: 15,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
-    width: '100%',
+    width: '80%',
+    borderBottomWidth: 2,
+    borderBottomColor: 'white',
+    backgroundColor: Colors.secondaryFaded,
   },
   inputContainerError: {
-    backgroundColor: '#FFC0CB',
     padding: 15,
-    borderRadius: 15,
-    borderColor: 'red',
-    borderWidth: 2,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
-    width: '100%',
+    width: '80%',
+    borderBottomWidth: 2,
+    borderBottomColor: 'red',
+    backgroundColor: Colors.secondaryFaded,
   },
   error: {
     color: 'red',

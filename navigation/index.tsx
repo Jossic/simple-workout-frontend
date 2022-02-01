@@ -35,6 +35,8 @@ import StartupScreen from '../screens/StartupScreen';
 import WorkoutScreen from '../screens/WorkoutScreen';
 import ExerciceScreen from '../screens/ExerciceScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AddWorkoutScreen from '../screens/AddWorkoutScreen';
+import AddExerciceScreen from '../screens/AddExerciceScreen';
 
 // Auth stack navigator
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
@@ -104,6 +106,16 @@ function RootNavigator() {
       <Stack.Screen
         name="Home"
         component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Add Workout"
+        component={AddWorkoutScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Add Exercice"
+        component={AddExerciceScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

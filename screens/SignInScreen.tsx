@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
-import CustomInput from '../components/CustomInput';
+import CustomInput from '../components/CustomAuthInput';
 import { AuthStackScreenProps } from '../types';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';

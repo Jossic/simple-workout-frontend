@@ -5,6 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import authReducer from './store/reducers/authReducers';
+import workoutReducer from './store/reducers/workoutReducers';
 import thunk from 'redux-thunk';
 
 import useCachedResources from './hooks/useCachedResources';
@@ -13,6 +14,7 @@ import Navigation from './navigation';
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  workout: workoutReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

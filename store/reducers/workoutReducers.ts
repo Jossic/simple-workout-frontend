@@ -9,7 +9,13 @@ import {
 export type Workout = {
   userId: string | null;
   token: string | null;
-  didTryAutoLogin: boolean;
+  exercice: {
+    id: string;
+    name: string;
+    description: string;
+    variant: string;
+    logo: string;
+  };
 };
 
 type Action = {
@@ -20,10 +26,56 @@ type Action = {
 };
 
 const initialState = {
-  exercices: [],
+  exercices: [
+    //   {
+    //     name: 'Dips entre deux bancs',
+    //     variant: '',
+    //     description: '',
+    //   },
+    //   {
+    //     name: 'Pompe prise large',
+    //     variant: 'Mains 45cm de haut',
+    //     description: '',
+    //   },
+    //   {
+    //     name: 'Traction verti prise supination',
+    //     variant: 'Elastique',
+    //     description: '',
+    //   },
+    //   {
+    //     name: 'Traction hori prise pronation',
+    //     variant: '',
+    //     description: '',
+    //   },
+    //   {
+    //     name: 'Squats',
+    //     variant: '',
+    //     description: '',
+    //   },
+    //   {
+    //     name: 'Bondissements',
+    //     variant: '',
+    //     description: '',
+    //   },
+    //   {
+    //     name: 'Crunchs',
+    //     variant: '',
+    //     description: '',
+    //   },
+    //   {
+    //     name: 'Crunch pieds au sol',
+    //     variant: '',
+    //     description: '',
+    //   },
+    //   {
+    //     name: 'K2',
+    //     variant: 'Hauteur 130cm',
+    //     description: '',
+    //   },
+  ],
 };
 
-export default (state: Auth = initialState, action: Action) => {
+export default (state: Workout = initialState, action: Action) => {
   switch (action.type) {
     case ADD_EXERCICE:
       return {
@@ -33,11 +85,6 @@ export default (state: Auth = initialState, action: Action) => {
     case GET_EXERCICES:
       const exercices = [...action.exercices];
 
-      exercices.sort((a, b) => {
-        let dateA = moment(a.createdAd),
-          dateB = moment(b.createdAd);
-        return dateB - dateA;
-      });
       return {
         ...state,
         exercices,

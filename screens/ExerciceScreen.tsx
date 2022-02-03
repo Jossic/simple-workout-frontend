@@ -1,5 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   FlatList,
   Image,
@@ -8,14 +8,22 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Exercice from '../components/Exercice/Exercice';
 import Colors from '../constants/Colors';
+import * as workoutActions from '../store/actions/workoutActions';
 
 interface ExerciceScreenProps {}
 
 const ExerciceScreen: React.FC<ExerciceScreenProps> = ({ navigation }) => {
   const exercices = useSelector((state) => state.workout.exercices);
+  const userId = useSelector((state) => state.auth.userId);
+  const token = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(workoutActions.getExercices(userId, token));
+  }, []);
   return (
     <View style={styles.container}>
       <Text>ExerciceScreen</Text>

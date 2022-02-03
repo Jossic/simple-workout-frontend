@@ -63,10 +63,9 @@ const AuthenticatorStackNavigator = () => {
   );
 };
 
-export default function Navigation({
-  colorScheme,
-}: {
-  colorScheme: ColorSchemeName;
+export default function Navigation({}: // colorScheme,
+{
+  // colorScheme: ColorSchemeName;
 }) {
   const didTryAutoLogin = useSelector((state) => {
     // console.log(`state =>`, state);

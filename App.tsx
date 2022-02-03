@@ -8,8 +8,8 @@ import authReducer from './store/reducers/authReducers';
 import workoutReducer from './store/reducers/workoutReducers';
 import thunk from 'redux-thunk';
 
-import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
+// import useCachedResources from './hooks/useCachedResources';
+// import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 
 const rootReducer = combineReducers({
@@ -20,8 +20,8 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default function App() {
-  const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
+  // const isLoadingComplete = useCachedResources();
+  // const colorScheme = useColorScheme();
 
   // if (!isLoadingComplete) {
   //   return null;
@@ -29,7 +29,8 @@ export default function App() {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
+        {/* <Navigation colorScheme={colorScheme} /> */}
+        <Navigation />
         <StatusBar />
       </SafeAreaProvider>
     </Provider>

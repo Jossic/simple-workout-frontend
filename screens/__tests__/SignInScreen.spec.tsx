@@ -25,14 +25,15 @@ describe('>SignIn Screen', () => {
   const mockStore = configureStore();
   let store;
   describe('>Layout', () => {
-    it.skip('should have email input', () => {
+    it('should have email input', async () => {
       store = mockStore(initialState);
-      render(
+      const { getByPlaceholderText } = render(
         <Provider store={store}>
           <SignInScreen />
         </Provider>
       );
-      const input = screen.getByPlaceholderText('Email...');
+
+      const input = getByPlaceholderText('Email...');
       expect(input).toBeInTheDocument();
     });
 

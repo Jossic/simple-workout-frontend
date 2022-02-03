@@ -18,6 +18,7 @@ type CustomInputProps = {
   placeholder?: string;
   label?: string;
   errorDetails?: string;
+  testID?: string;
   keyboardType?: KeyboardTypeOptions;
   secureTextEntry?: boolean;
   autoFocus?: boolean;
@@ -29,6 +30,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   control,
   placeholder,
   label,
+  testID = 'NS',
   keyboardType = 'default',
   secureTextEntry = false,
   autoFocus = false,
@@ -58,6 +60,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
                 value={value}
                 onChangeText={onChange}
                 style={[styles.input, tw``]}
+                testID={testID}
                 keyboardType={keyboardType}
                 secureTextEntry={secureTextEntry}
                 autoFocus={autoFocus}

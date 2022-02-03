@@ -98,6 +98,7 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
                 fieldName={'email'}
                 control={control}
                 keyboardType="email-address"
+                testID="email"
                 autoFocus
                 autoCorrect={false}
                 placeholder="Email..."

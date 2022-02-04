@@ -1,14 +1,11 @@
 import SignInScreen from '../SignInScreen';
-import {
-  queryByRole,
-  render,
-  screen,
-  waitFor,
-} from '@testing-library/react-native';
+import { queryByRole, render, waitFor } from '@testing-library/react-native';
 import '@testing-library/jest-dom/extend-expect';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import '@testing-library/jest-dom';
+
 // import { userEvent } from '@testing-library/react-native';
 // import { setupServer } from 'msw/node';
 // import { rest } from 'msw';
@@ -26,7 +23,7 @@ describe('>SignIn Screen', () => {
   const mockStore = configureStore();
   let store;
   describe('>Layout', () => {
-    it('should have email input', async () => {
+    it('should have email input', () => {
       store = mockStore(initialState);
       const { getByTestId } = render(
         <Provider store={store}>
@@ -36,30 +33,40 @@ describe('>SignIn Screen', () => {
 
       expect(getByTestId('email')).toBeDefined();
     });
+    it('should have password input', () => {
+      store = mockStore(initialState);
+      const { getByTestId } = render(
+        <Provider store={store}>
+          <SignInScreen />
+        </Provider>
+      );
 
-    // it('should have password input', () => {
-    //   render(<SignInScreen />);
-    //   const input = screen.getByLabelText('Password');
-    //   expect(input).toBeInTheDocument();
-    // });
+      expect(getByTestId('password')).toBeDefined();
+    });
 
-    // it('should have password type for password input', () => {
-    //   render(<SignInScreen />);
-    //   const input = screen.getByLabelText('Password');
-    //   expect(input.type).toBe('password');
-    // });
+    it.skip('should have password type for password input', async () => {
+      store = mockStore(initialState);
+      const { getByTestId } = render(
+        <Provider store={store}>
+          <SignInScreen />
+        </Provider>
+      );
 
-    // it('should have sign in button', () => {
-    //   render(<SignInScreen />);
-    //   const button = screen.queryByRole('button', { name: 'Sign Up' });
-    //   expect(button).toBeInTheDocument();
-    // });
+      const input = await getByTestId('password');
+      // expect(getByTestId('password')).toBe(true);
+    });
 
-    // it('should have initial disabled sign up button', () => {
-    //   render(<SignInScreen />);
-    //   const button = screen.queryByRole('button', { name: 'Sign Up' });
-    //   expect(button).toBeDisabled();
-    // });
+    it('should have sign in button', () => {
+      store = mockStore(initialState);
+      const { getByText } = render(
+        <Provider store={store}>
+          <SignInScreen />
+        </Provider>
+      );
+      const button = getByText('Se connecter');
+      expect(button).toBeTruthy();
+    });
+
   });
 
   //   describe('Interactions', () => {

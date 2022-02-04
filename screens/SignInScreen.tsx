@@ -91,7 +91,7 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
                 Suivez tous vos workouts
               </Text>
               <View style={[styles.logView, tw``]}>
-                <Text style={[styles.log, tw``]}>Se connecter</Text>
+                <Text style={[styles.log, tw``]}>Connexion</Text>
               </View>
 
               <CustomInput
@@ -107,6 +107,7 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
               <CustomInput
                 fieldName="password"
                 control={control}
+                testID="password"
                 secureTextEntry={true}
                 placeholder="Mot de passe..."
                 label="Mot de passe"

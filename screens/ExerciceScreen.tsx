@@ -1,5 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
+import { Ionicons } from 'react-native-vector-icons';
 import {
   FlatList,
   Image,
@@ -31,69 +32,22 @@ const ExerciceScreen: React.FC<ExerciceScreenProps> = ({ navigation }) => {
       <FlatList
         data={exercices}
         renderItem={({ item }) => <Exercice item={item} />}
-        // ListHeaderComponent={() => (
-        //   <>
-        //     <View style={styles.header}>
-        //       <Image
-        //         source={
-        //           exercice.logo
-        //             ? { uri: exercice.logo }
-        //             : require('../assets/images/default-logo.png')
-        //         }
-        //         style={styles.logo}
-        //       />
-
-        //       <Text style={styles.title}>{project.name}</Text>
-        //     </View>
-        //     {notes[0] ? (
-        //       <TouchableOpacity
-        //         activeOpacity={0.8}
-        //         style={{ marginBottom: 30 }}
-        //         onPress={() =>
-        //           navigation.navigate('addNote', {
-        //             project,
-        //           })
-        //         }
-        //       >
-        //         <View style={styles.smallAddButton}>
-        //           <Text style={styles.smallAddButtonText}>Ajouter</Text>
-        //         </View>
-        //       </TouchableOpacity>
-        //     ) : (
-        //       <>
-        //         {/* <Image
-        //           source={require('../assets/empty.png')}
-        //           style={styles.image}
-        //         /> */}
-        //         <Text>Commecez par ajouter votre première note.</Text>
-        //         <TouchableOpacity
-        //           activeOpacity={0.8}
-        //           onPress={() =>
-        //             navigation.navigate('addNote', {
-        //               project,
-        //             })
-        //           }
-        //         >
-        //           <LinearGradient
-        //             colors={Colors.linear}
-        //             style={styles.addButton}
-        //           >
-        //             <Text style={styles.addButtonText}>Ajouter une note</Text>
-        //           </LinearGradient>
-        //         </TouchableOpacity>
-        //       </>
-        //     )}
-        //   </>
-        // )}
       />
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.navigate('Add Exercice')}
       >
         <LinearGradient colors={Colors.linear} style={styles.addButton}>
           <Text style={styles.addButtonText}>Ajouter un exercice</Text>
         </LinearGradient>
+      </TouchableOpacity> */}
+      <TouchableOpacity
+        activeOpacity={0.8}
+        style={styles.logout}
+        // onPress={onLogoutPressHandler}
+      >
+        <Ionicons name="add-outline" color="white" size={23} />
       </TouchableOpacity>
     </View>
   );
@@ -116,5 +70,16 @@ const styles = StyleSheet.create({
   addButtonText: {
     color: 'white',
     fontSize: 18,
+  },
+  logout: {
+    backgroundColor: Colors.primary,
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: 50,
   },
 });

@@ -1,7 +1,8 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import React, { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import {
+  ActivityIndicator,
   Alert,
   Button,
   Dimensions,
@@ -39,7 +40,7 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
       )
       .required('Veuillez renseigner votre mot de passe'),
   });
-
+  const [loading, setloading] = useState(false);
   const dispatch = useDispatch();
 
   const methods = useForm<AuthProps>({
@@ -52,10 +53,12 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
 
   const onSubmit: SubmitHandler<AuthProps> = async (data) => {
     const { email, password } = data;
+    setloading(true);
     try {
       await dispatch(authActions.signin(email, password));
       navigation.navigate('Home');
     } catch (error) {
+      setloading(false);
       switch (error.message) {
         case 'EMAIL_NOT_FOUND':
           Alert.alert('Identifiants et/ou mot de passe invalide', undefined);
@@ -121,7 +124,13 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
                     onPress={handleSubmit(onSubmit)}
                     testID="submitAuth"
                   >
-                    <Text style={[styles.submitText, tw``]}>Se connecter</Text>
+                    <Text style={[styles.submitText, tw``]}>
+                      {loading ? (
+                        <ActivityIndicator size="small" color="white" />
+                      ) : (
+                        'Se connecter'
+                      )}
+                    </Text>
                   </TouchableOpacity>
                 </LinearGradient>
                 <TouchableOpacity

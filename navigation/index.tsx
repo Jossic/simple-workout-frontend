@@ -32,10 +32,10 @@ import {
 import LinkingConfiguration from './LinkingConfiguration';
 // import * as Notifications from 'expo-notifications';
 import StartupScreen from '../screens/StartupScreen';
-import WorkoutScreen from '../screens/WorkoutScreen';
+import TrainingScreen from '../screens/TrainingScreen';
 import ExerciceScreen from '../screens/ExerciceScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import AddWorkoutScreen from '../screens/AddWorkoutScreen';
+import AddTrainingScreen from '../screens/AddTrainingScreen';
 import AddExerciceScreen from '../screens/AddExerciceScreen';
 
 // Auth stack navigator
@@ -108,8 +108,8 @@ function RootNavigator() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Add Workout"
-        component={AddWorkoutScreen}
+        name="Add Training"
+        component={AddTrainingScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -140,7 +140,7 @@ function BottomTabNavigator() {
 
           if (route.name === 'HomeScreen') {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Workout') {
+          } else if (route.name === 'Training') {
             iconName = focused ? 'barbell' : 'barbell-outline';
           } else if (route.name === 'Exercice') {
             iconName = focused ? 'bicycle' : 'bicycle-outline';
@@ -161,10 +161,10 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="Workout"
-        component={WorkoutScreen}
+        name="Training"
+        component={TrainingScreen}
         options={{
-          title: 'Workout',
+          title: 'Training',
         }}
       />
       <BottomTab.Screen

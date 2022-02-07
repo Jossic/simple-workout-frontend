@@ -155,8 +155,10 @@ export const fetchRefreshToken = (refreshToken) => {
 
 export const logout = async () => {
   AsyncStorage.removeItem('userData');
-  return {
-    type: LOGOUT,
+  return async (dispatch: Dispatch) => {
+    dispatch({
+      type: LOGOUT,
+    });
   };
 };
 

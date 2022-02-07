@@ -7,13 +7,13 @@ import {
   KeyboardTypeOptions,
 } from 'react-native';
 import Colors from '../constants/Colors';
-import { Control, Controller, FieldErrors, FieldValues } from 'react-hook-form';
+import { Control, Controller, useFormContext } from 'react-hook-form';
 import tw from 'tailwind-react-native-classnames';
 import { AuthProps } from '../types/auth';
 
 type CustomInputProps = {
   fieldName: 'email' | 'password' | 'repeatPassword';
-  control: Control<AuthProps>;
+  // control: Control<AuthProps>;
 
   placeholder?: string;
   label?: string;
@@ -27,7 +27,7 @@ type CustomInputProps = {
 
 const CustomInput: React.FC<CustomInputProps> = ({
   fieldName,
-  control,
+  // control,
   placeholder,
   label,
   testID = 'NS',
@@ -36,6 +36,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   autoFocus = false,
   autoCorrect = false,
 }) => {
+  const { control, ...rest } = useFormContext();
   const [errorText, setErrorText] = useState<string | undefined>('');
   return (
     <>
@@ -65,13 +66,16 @@ const CustomInput: React.FC<CustomInputProps> = ({
                 secureTextEntry={secureTextEntry}
                 autoFocus={autoFocus}
                 autoCorrect={autoCorrect}
+                {...rest}
               />
             </View>
           );
         }}
       />
       {errorText !== '' && (
-        <Text style={[styles.error, tw``]}>{errorText}</Text>
+        <Text testID={`errorMessage`} style={[styles.error, tw``]}>
+          {errorText}
+        </Text>
       )}
     </>
   );

@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import {
   Alert,
   Button,
@@ -41,13 +41,15 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
   });
 
   const dispatch = useDispatch();
+
+  const methods = useForm<AuthProps>({
+    resolver: yupResolver(validationSchema),
+  });
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<AuthProps>({
-    resolver: yupResolver(validationSchema),
-  });
+  } = methods;
 
   const onSubmit: SubmitHandler<AuthProps> = async (data) => {
     const { email, password } = data;
@@ -93,46 +95,48 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
               <View style={[styles.logView, tw``]}>
                 <Text style={[styles.log, tw``]}>Connexion</Text>
               </View>
+              <FormProvider {...methods}>
+                <CustomInput
+                  fieldName={'email'}
+                  // control={control}
+                  keyboardType="email-address"
+                  testID="email"
+                  autoFocus
+                  autoCorrect={false}
+                  placeholder="Email..."
+                  label="Email"
+                />
+                <CustomInput
+                  fieldName="password"
+                  // control={control}
+                  testID="password"
+                  secureTextEntry={true}
+                  placeholder="Mot de passe..."
+                  label="Mot de passe"
+                />
 
-              <CustomInput
-                fieldName={'email'}
-                control={control}
-                keyboardType="email-address"
-                testID="email"
-                autoFocus
-                autoCorrect={false}
-                placeholder="Email..."
-                label="Email"
-              />
-              <CustomInput
-                fieldName="password"
-                control={control}
-                testID="password"
-                secureTextEntry={true}
-                placeholder="Mot de passe..."
-                label="Mot de passe"
-              />
-
-              <LinearGradient
-                colors={Colors.linear}
-                style={[styles.submit, tw``]}
-              >
+                <LinearGradient
+                  colors={Colors.linear}
+                  style={[styles.submit, tw``]}
+                >
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={handleSubmit(onSubmit)}
+                    testID="submitAuth"
+                  >
+                    <Text style={[styles.submitText, tw``]}>Se connecter</Text>
+                  </TouchableOpacity>
+                </LinearGradient>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={handleSubmit(onSubmit)}
+                  // style={styles.submit}
+                  onPress={() => navigation.navigate('SignUp')}
                 >
-                  <Text style={[styles.submitText, tw``]}>Se connecter</Text>
+                  <Text style={[styles.switchButton, tw``]}>
+                    Pas de compte ? Créer un compte
+                  </Text>
                 </TouchableOpacity>
-              </LinearGradient>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                // style={styles.submit}
-                onPress={() => navigation.navigate('SignUp')}
-              >
-                <Text style={[styles.switchButton, tw``]}>
-                  Pas de compte ? Créer un compte
-                </Text>
-              </TouchableOpacity>
+              </FormProvider>
             </View>
           </ImageBackground>
         </SafeAreaView>

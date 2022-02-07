@@ -84,7 +84,7 @@ export default function Navigation({}: // colorScheme,
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+      // theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
     >
       {didTryAutoLogin && !isAuth && <AuthenticatorStackNavigator />}
       {didTryAutoLogin && isAuth && <RootNavigator />}

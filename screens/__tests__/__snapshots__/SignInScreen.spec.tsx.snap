@@ -1,0 +1,359 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`>SignIn Screen >Layout call the onSubmit function 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "paddingBottom": 0,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {},
+      ]
+    }
+  >
+    <RNCSafeAreaView
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        accessibilityIgnoresInvertColors={true}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+            "opacity": 0.7,
+          }
+        }
+      >
+        <Image
+          resizeMode="cover"
+          source={
+            Object {
+              "uri": "backGround.jpg",
+            }
+          }
+          style={
+            Array [
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              Object {
+                "height": undefined,
+                "width": undefined,
+              },
+              undefined,
+            ]
+          }
+        />
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "rgba(0,0,0,0.5)",
+                "flex": 1,
+                "justifyContent": "center",
+                "width": "100%",
+              },
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#F0E7D8",
+                  "fontSize": 30,
+                  "fontWeight": "bold",
+                  "textTransform": "uppercase",
+                },
+                Object {},
+              ]
+            }
+          >
+            Simple-Workout
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#F0E7D8",
+                  "paddingHorizontal": 15,
+                },
+                Object {},
+              ]
+            }
+          >
+            Suivez tous vos workouts
+          </Text>
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "rgba(67,97,238,.2)",
+                  "borderRadius": 15,
+                  "elevation": 2,
+                  "justifyContent": "center",
+                  "marginTop": 20,
+                  "padding": 10,
+                  "shadowColor": "#000",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.5,
+                  "shadowRadius": 1,
+                  "width": 150,
+                },
+                Object {},
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "white",
+                    "fontSize": 20,
+                  },
+                  Object {},
+                ]
+              }
+            >
+              Connexion
+            </Text>
+          </View>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#4361EE",
+                  "fontWeight": "bold",
+                  "marginBottom": 5,
+                  "marginTop": 10,
+                },
+                Object {},
+              ]
+            }
+          >
+            Email
+          </Text>
+          <View
+            style={
+              Object {
+                "backgroundColor": "rgba(67,97,238,.2)",
+                "borderBottomColor": "white",
+                "borderBottomWidth": 2,
+                "padding": 15,
+                "width": "80%",
+              }
+            }
+          >
+            <TextInput
+              allowFontScaling={true}
+              autoCorrect={false}
+              autoFocus={true}
+              keyboardType="email-address"
+              onChangeText={[Function]}
+              placeholder="Email..."
+              rejectResponderTermination={true}
+              secureTextEntry={false}
+              style={
+                Array [
+                  Object {
+                    "color": "black",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                    "maxHeight": 150,
+                  },
+                  Object {},
+                ]
+              }
+              testID="email"
+              underlineColorAndroid="transparent"
+              value="test@test.com"
+            />
+          </View>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#4361EE",
+                  "fontWeight": "bold",
+                  "marginBottom": 5,
+                  "marginTop": 10,
+                },
+                Object {},
+              ]
+            }
+          >
+            Mot de passe
+          </Text>
+          <View
+            style={
+              Object {
+                "backgroundColor": "rgba(67,97,238,.2)",
+                "borderBottomColor": "red",
+                "borderBottomWidth": 2,
+                "padding": 15,
+                "width": "80%",
+              }
+            }
+          >
+            <TextInput
+              allowFontScaling={true}
+              autoCorrect={false}
+              autoFocus={false}
+              keyboardType="default"
+              onChangeText={[Function]}
+              placeholder="Mot de passe..."
+              rejectResponderTermination={true}
+              secureTextEntry={true}
+              style={
+                Array [
+                  Object {
+                    "color": "black",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                    "maxHeight": 150,
+                  },
+                  Object {},
+                ]
+              }
+              testID="password"
+              underlineColorAndroid="transparent"
+              value="123456"
+            />
+          </View>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "red",
+                  "marginTop": 5,
+                },
+                Object {},
+              ]
+            }
+          >
+            Saisir au moins 8 caractères
+          </Text>
+          <ViewManagerAdapter_ExpoLinearGradient
+            proxiedProperties={
+              Object {
+                "colors": Array [
+                  4294942693,
+                  4283550496,
+                ],
+                "endPoint": undefined,
+                "locations": undefined,
+                "startPoint": undefined,
+              }
+            }
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "alignSelf": "center",
+                  "borderRadius": 10,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "marginTop": 40,
+                  "padding": 10,
+                  "width": 200,
+                },
+                Object {},
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+              testID="submitAuth"
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#4361EE",
+                      "fontSize": 17,
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                Se connecter
+              </Text>
+            </View>
+          </ViewManagerAdapter_ExpoLinearGradient>
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "white",
+                    "marginTop": 30,
+                  },
+                  Object {},
+                ]
+              }
+            >
+              Pas de compte ? Créer un compte
+            </Text>
+          </View>
+        </View>
+      </View>
+    </RNCSafeAreaView>
+  </View>
+</View>
+`;

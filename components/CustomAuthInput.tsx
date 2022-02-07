@@ -36,47 +36,43 @@ const CustomInput: React.FC<CustomInputProps> = ({
   autoFocus = false,
   autoCorrect = false,
 }) => {
-  const { control, ...rest } = useFormContext();
+  const methods = useFormContext();
   const [errorText, setErrorText] = useState<string | undefined>('');
   return (
     <>
       <Text style={[styles.label, tw``]}>{label}</Text>
       <Controller
+        {...methods}
         name={fieldName}
-        control={control}
         render={({ field: { value, onChange }, fieldState: { error } }) => {
-          if (error) {
-            setErrorText(error.message);
-          } else {
-            setErrorText('');
-          }
           return (
-            <View
-              style={
-                !error ? styles.inputContainer : styles.inputContainerError
-              }
-            >
-              <TextInput
-                placeholder={placeholder}
-                value={value}
-                onChangeText={onChange}
-                style={[styles.input, tw``]}
-                testID={testID}
-                keyboardType={keyboardType}
-                secureTextEntry={secureTextEntry}
-                autoFocus={autoFocus}
-                autoCorrect={autoCorrect}
-                {...rest}
-              />
-            </View>
+            <>
+              <View
+                style={
+                  !error ? styles.inputContainer : styles.inputContainerError
+                }
+              >
+                <TextInput
+                  placeholder={placeholder}
+                  value={value}
+                  onChangeText={onChange}
+                  style={[styles.input, tw``]}
+                  testID={testID}
+                  keyboardType={keyboardType}
+                  secureTextEntry={secureTextEntry}
+                  autoFocus={autoFocus}
+                  autoCorrect={autoCorrect}
+                />
+              </View>
+              {error?.message !== '' && (
+                <Text testID={`errorMessage`} style={[styles.error, tw``]}>
+                  {error?.message}
+                </Text>
+              )}
+            </>
           );
         }}
       />
-      {errorText !== '' && (
-        <Text testID={`errorMessage`} style={[styles.error, tw``]}>
-          {errorText}
-        </Text>
-      )}
     </>
   );
 };

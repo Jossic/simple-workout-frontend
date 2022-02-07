@@ -1,5 +1,7 @@
 const tintColorLight = '#2f95dc';
 const tintColorDark = '#fff';
+const linear1 = '#4361EE';
+const linear2 = '#2A2B2A';
 
 export default {
   light: {
@@ -29,6 +31,6 @@ export default {
   secondaryFaded: 'rgba(67,97,238,.2)',
   ternary: '#2A2B2A',
   transparent: 'rgba(0,0,0,0.5)',
-  linear: ['#FF9FE5', '#51CB20'],
+  linear: [linear1, linear2],
   quaternary: '#51CB20',
 };

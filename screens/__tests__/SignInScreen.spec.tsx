@@ -127,7 +127,7 @@ describe('>SignIn Screen', () => {
       // expect(getByTestId('submitAuth').props.children).toBe(
       //   famousProgrammerInHistory
       // );
-      expect(toJSON()).toMatchSnapshot();
+      // expect(toJSON()).toMatchSnapshot();
       // await act(async () => {
       //   fireEvent.changeText(getByTestId('email'), {
       //     target: { value: 'test@test.com' },

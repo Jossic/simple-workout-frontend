@@ -7,11 +7,12 @@ import * as authActions from '../store/actions/authActions';
 
 interface HomeScreenProps {}
 
-const HomeScreen: React.FC<HomeScreenProps> = () => {
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const onLogoutPressHandler = () => {
     dispatch(authActions.logout());
+    navigation.navigate('SignIn');
   };
 
   return (

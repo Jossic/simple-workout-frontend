@@ -82,7 +82,7 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
       <View style={[styles.container, tw``]}>
         <SafeAreaView style={{ flex: 1 }}>
           <ImageBackground
-            source={require('../assets/images/backGround.jpg')}
+            source={require('../assets/images/woman.jpg')}
             resizeMode="cover"
             style={styles.image}
           >

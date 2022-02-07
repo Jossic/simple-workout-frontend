@@ -30,7 +30,7 @@ import {
   StartupParamList,
 } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
-import * as Notifications from 'expo-notifications';
+// import * as Notifications from 'expo-notifications';
 import StartupScreen from '../screens/StartupScreen';
 import WorkoutScreen from '../screens/WorkoutScreen';
 import ExerciceScreen from '../screens/ExerciceScreen';
@@ -73,14 +73,14 @@ export default function Navigation({}: // colorScheme,
   });
   const isAuth = !!useSelector((state) => state.auth.userId);
 
-  const getDeviceToken = async () => {
-    const deviceToken = await Notifications.getExpoPushTokenAsync();
-  };
+  // const getDeviceToken = async () => {
+  //   const deviceToken = await Notifications.getExpoPushTokenAsync();
+  // };
 
-  if (isAuth) {
-    // Recup le token de l'appareil
-    getDeviceToken();
-  }
+  // if (isAuth) {
+  //   // Recup le token de l'appareil
+  //   getDeviceToken();
+  // }
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
@@ -132,13 +132,13 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Home"
+      initialRouteName="HomeScreen"
       screenOptions={({ route }) => ({
         tabBarActiveTintColor: Colors.primary,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'Home') {
+          if (route.name === 'HomeScreen') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Workout') {
             iconName = focused ? 'barbell' : 'barbell-outline';
@@ -153,9 +153,9 @@ function BottomTabNavigator() {
       })}
     >
       <BottomTab.Screen
-        name="Home"
+        name="HomeScreen"
         component={HomeScreen}
-        options={({ navigation }: RootTabScreenProps<'Home'>) => ({
+        options={({ navigation }: RootTabScreenProps<'HomeScreen'>) => ({
           title: 'Accueil',
           // Ajouter bouton avec profil
         })}

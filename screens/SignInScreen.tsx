@@ -46,7 +46,6 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
     resolver: yupResolver(validationSchema),
   });
   const {
-    control,
     handleSubmit,
     formState: { errors },
   } = methods;
@@ -83,7 +82,7 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
       <View style={[styles.container, tw``]}>
         <SafeAreaView style={{ flex: 1 }}>
           <ImageBackground
-            source={{ uri: require('../assets/images/backGround.jpg') }}
+            source={require('../assets/images/backGround.jpg')}
             resizeMode="cover"
             style={styles.image}
           >
@@ -98,7 +97,6 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
               <FormProvider {...methods}>
                 <CustomInput
                   fieldName={'email'}
-                  // control={control}
                   keyboardType="email-address"
                   testID="email"
                   autoFocus
@@ -108,7 +106,6 @@ const SignInScreen = ({ navigation }: AuthStackScreenProps<'SignIn'>) => {
                 />
                 <CustomInput
                   fieldName="password"
-                  // control={control}
                   testID="password"
                   secureTextEntry={true}
                   placeholder="Mot de passe..."

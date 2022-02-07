@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   Alert,
+  ImagePickerResult,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
@@ -119,42 +120,46 @@ const AddExerciceScreen = ({ navigation }) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <FormProvider {...methods}>
-            <CustomWorkoutInput
-              fieldName="name"
-              control={control}
-              placeholder="Nom de l'exercice"
-              label="Nom de l'exercice"
-              keyboardType="default"
-              autoFocus={true}
-              autoCorrect={false}
-            />
-            <CustomWorkoutInput
-              fieldName="variant"
-              control={control}
-              placeholder="Variante"
-              label="Variante"
-              keyboardType="default"
-              autoCorrect={false}
-            />
-            <CustomWorkoutInput
-              fieldName="description"
-              control={control}
-              placeholder="Descriptif"
-              label="Descriptif"
-              keyboardType="default"
-              autoCorrect={false}
-              multiline
-            />
-          </FormProvider>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={styles.submit}
-            onPress={handleSubmit(onSubmit)}
+          <View
+            style={[
+              styles.container2,
+              tw`flex items-center justify-center w-full`,
+            ]}
           >
-            <Text style={styles.submitText}>Créer</Text>
-            <Ionicons name="arrow-forward" size={23} color="white" />
-          </TouchableOpacity>
+            <FormProvider {...methods}>
+              <CustomWorkoutInput
+                fieldName="name"
+                placeholder="Nom de l'exercice"
+                label="Nom de l'exercice"
+                keyboardType="default"
+                autoFocus={true}
+                autoCorrect={false}
+              />
+              <CustomWorkoutInput
+                fieldName="variant"
+                placeholder="Variante"
+                label="Variante"
+                keyboardType="default"
+                autoCorrect={false}
+              />
+              <CustomWorkoutInput
+                fieldName="description"
+                placeholder="Descriptif"
+                label="Descriptif"
+                keyboardType="default"
+                autoCorrect={false}
+                multiline
+              />
+            </FormProvider>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.submit}
+              onPress={handleSubmit(onSubmit)}
+            >
+              <Text style={styles.submitText}>Créer</Text>
+              <Ionicons name="arrow-forward" size={23} color="white" />
+            </TouchableOpacity>
+          </View>
         </SafeAreaView>
       </View>
     </KeyboardAvoidingView>
@@ -167,6 +172,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.secondary,
     paddingTop: 30,
+  },
+  container2: {
+    flex: 1,
+    backgroundColor: Colors.transparent,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
   inputContainer: {
     backgroundColor: 'white',

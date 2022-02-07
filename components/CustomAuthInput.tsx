@@ -13,11 +13,8 @@ import { AuthProps } from '../types/auth';
 
 type CustomInputProps = {
   fieldName: 'email' | 'password' | 'repeatPassword';
-  // control: Control<AuthProps>;
-
   placeholder?: string;
   label?: string;
-  errorDetails?: string;
   testID?: string;
   keyboardType?: KeyboardTypeOptions;
   secureTextEntry?: boolean;
@@ -37,7 +34,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   autoCorrect = false,
 }) => {
   const methods = useFormContext();
-  const [errorText, setErrorText] = useState<string | undefined>('');
+
   return (
     <>
       <Text style={[styles.label, tw``]}>{label}</Text>

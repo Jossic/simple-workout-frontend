@@ -7,17 +7,20 @@ import {
   KeyboardTypeOptions,
 } from 'react-native';
 import Colors from '../constants/Colors';
-import { Control, Controller, FieldErrors, FieldValues } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  FieldValues,
+  useFormContext,
+} from 'react-hook-form';
 import tw from 'tailwind-react-native-classnames';
 import { AuthProps } from '../types/auth';
 
 type CustomWorkoutInputProps = {
-  fieldName: 'email' | 'password' | 'repeatPassword';
-  control: Control<AuthProps>;
-
+  fieldName: 'name' | 'description' | 'variant';
   placeholder?: string;
   label?: string;
-  errorDetails?: string;
   keyboardType?: KeyboardTypeOptions;
   secureTextEntry?: boolean;
   autoFocus?: boolean;
@@ -27,7 +30,6 @@ type CustomWorkoutInputProps = {
 
 const CustomWorkoutInput: React.FC<CustomWorkoutInputProps> = ({
   fieldName,
-  control,
   placeholder,
   label,
   keyboardType = 'default',
@@ -36,43 +38,41 @@ const CustomWorkoutInput: React.FC<CustomWorkoutInputProps> = ({
   autoCorrect = false,
   multiline = false,
 }) => {
-  const [errorText, setErrorText] = useState<string | undefined>('');
+  const methods = useFormContext();
   return (
     <>
       <Text style={[styles.label, tw``]}>{label}</Text>
       <Controller
         name={fieldName}
-        control={control}
         render={({ field: { value, onChange }, fieldState: { error } }) => {
-          if (error) {
-            setErrorText(error.message);
-          } else {
-            setErrorText('');
-          }
           return (
-            <View
-              style={
-                !error ? styles.inputContainer : styles.inputContainerError
-              }
-            >
-              <TextInput
-                placeholder={placeholder}
-                value={value}
-                onChangeText={onChange}
-                style={[styles.input, tw``]}
-                keyboardType={keyboardType}
-                secureTextEntry={secureTextEntry}
-                autoFocus={autoFocus}
-                autoCorrect={autoCorrect}
-                multiline={multiline}
-              />
-            </View>
+            <>
+              <View
+                style={
+                  !error ? styles.inputContainer : styles.inputContainerError
+                }
+              >
+                <TextInput
+                  placeholder={placeholder}
+                  value={value}
+                  onChangeText={onChange}
+                  style={[styles.input, tw``]}
+                  keyboardType={keyboardType}
+                  secureTextEntry={secureTextEntry}
+                  autoFocus={autoFocus}
+                  autoCorrect={autoCorrect}
+                  multiline={multiline}
+                />
+              </View>
+              {error?.message !== '' && (
+                <Text testID={`errorMessage`} style={[styles.error, tw``]}>
+                  {error?.message}
+                </Text>
+              )}
+            </>
           );
         }}
       />
-      {errorText !== '' && (
-        <Text style={[styles.error, tw``]}>{errorText}</Text>
-      )}
     </>
   );
 };

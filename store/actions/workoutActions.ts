@@ -41,7 +41,6 @@ export const getExercices = (userId, token) => {
         for (const key in response.data) {
           exercices.push({
             id: key,
-            content: response.data[key].content,
             name: response.data[key].name,
             description: response.data[key].description,
             variant: response.data[key].variant,
@@ -52,7 +51,7 @@ export const getExercices = (userId, token) => {
         dispatch({ type: END_LOADING });
       })
       .catch((error) => {
-        console.log(`catch error =>`, error);
+        console.log(`catch error getExercice =>`, error);
         dispatch({ type: END_LOADING });
       });
   };

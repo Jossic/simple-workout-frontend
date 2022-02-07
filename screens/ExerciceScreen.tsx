@@ -18,6 +18,7 @@ import { FloatingAction } from 'react-native-floating-action';
 import { RootTabScreenProps } from '../types';
 
 interface ExerciceScreenProps {}
+type Add = 'Add Exercice' | 'Add Workout';
 
 const ExerciceScreen = ({ navigation }: RootTabScreenProps<'Exercice'>) => {
   const exercices = useSelector((state) => state.workout?.exercices);
@@ -30,13 +31,13 @@ const ExerciceScreen = ({ navigation }: RootTabScreenProps<'Exercice'>) => {
     {
       text: 'Ajouter un exercice',
       icon: <Icon name="barbell" style={styles.actionButtonIcon} />,
-      name: 'bt_exercices',
+      name: 'Add Exercice',
       position: 1,
     },
     {
       text: 'Ajouter une séance',
       icon: <Icon name="contract" style={styles.actionButtonIcon} />,
-      name: 'bt_workout',
+      name: 'Add Training',
       position: 2,
     },
   ];
@@ -44,6 +45,7 @@ const ExerciceScreen = ({ navigation }: RootTabScreenProps<'Exercice'>) => {
   useEffect(() => {
     dispatch(workoutActions.getExercices(userId, token));
   }, []);
+
   return (
     <View style={styles.container}>
       <Text>ExerciceScreen</Text>
@@ -54,9 +56,10 @@ const ExerciceScreen = ({ navigation }: RootTabScreenProps<'Exercice'>) => {
       />
 
       <FloatingAction
+        testID="plusButton"
         actions={actions}
-        onPressItem={(name) => {
-          console.log(`selected button: ${name}`);
+        onPressItem={(nav) => {
+          navigation.navigate(nav);
         }}
       />
 
@@ -105,6 +108,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     height: 22,
     color: 'white',
-    // backgroundColor: Colors.primaryFaded,
+    // backgroundCol   or: Colors.primaryFaded,
   },
 });

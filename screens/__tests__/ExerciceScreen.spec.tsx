@@ -2,12 +2,15 @@ import ExerciceScreen from '../ExerciceScreen';
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
+const middlewares = [thunk];
 
 describe('Séances & exercices screen', () => {
   const initialState = {
     exercices: [],
   };
-  const mockStore = configureStore();
+  const mockStore = configureStore(middlewares);
   let store;
 
   //Doit y avoir un bouton + en bas

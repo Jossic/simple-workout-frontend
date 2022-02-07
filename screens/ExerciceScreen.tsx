@@ -3,11 +3,13 @@ import React, { useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {
+  Button,
   FlatList,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,12 +35,14 @@ const ExerciceScreen = ({ navigation }: RootTabScreenProps<'Exercice'>) => {
       icon: <Icon name="barbell" style={styles.actionButtonIcon} />,
       name: 'Add Exercice',
       position: 1,
+      color: Colors.secondary,
     },
     {
       text: 'Ajouter une séance',
       icon: <Icon name="contract" style={styles.actionButtonIcon} />,
       name: 'Add Training',
       position: 2,
+      color: Colors.secondary,
     },
   ];
 
@@ -55,33 +59,15 @@ const ExerciceScreen = ({ navigation }: RootTabScreenProps<'Exercice'>) => {
         renderItem={({ item }) => <Exercice item={item} />}
       />
 
-      <FloatingAction
-        testID="plusButton"
-        actions={actions}
-        onPressItem={(nav) => {
-          navigation.navigate(nav);
-        }}
-      />
-
-      {/*  <View style={{ flex: 1 }}>
-        
-        <ActionButton buttonColor={Colors.primary} testID="plusButton">
-          <ActionButton.Item
-            buttonColor="#9b59b6"
-            title="Ajouter un exercice"
-            onPress={() => console.log('press')}
-          >
-            <Icon name="barbell" style={styles.actionButtonIcon} />
-          </ActionButton.Item>
-          <ActionButton.Item
-            buttonColor="#3498db"
-            title="Créer une séance"
-            onPress={() => navigation.navigate('Add Training')}
-          >
-            <Icon name="contract" style={styles.actionButtonIcon} />
-          </ActionButton.Item>
-               </ActionButton>
-      </View> */}
+      <TouchableWithoutFeedback testID="plusButton">
+        <FloatingAction
+          actions={actions}
+          color={Colors.primary}
+          onPressItem={(nav) => {
+            navigation.navigate(nav);
+          }}
+        />
+      </TouchableWithoutFeedback>
     </View>
   );
 };

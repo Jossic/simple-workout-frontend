@@ -16,14 +16,13 @@ describe('Séances & exercices screen', () => {
   //Doit y avoir un bouton + en bas
   it('should have a + button', () => {
     store = mockStore(initialState);
-    const { getByTestId } = render(
+    const { queryByTestId } = render(
       <Provider store={store}>
         <ExerciceScreen />
       </Provider>
     );
-    // const button = getByTestId('plusButton');
-    // expect(button).toBeTruthy();
-    expect(getByTestId('plusButton')).toBeDefined();
+
+    expect(queryByTestId('plusButton')).toBeDefined();
   });
   //Doit pouvoir ajouter un exo, ou une seance
 });

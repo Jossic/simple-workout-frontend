@@ -11,7 +11,12 @@ import {
   View,
 } from 'react-native';
 import { Ionicons } from 'react-native-vector-icons';
-import { useForm, Controller } from 'react-hook-form';
+import {
+  useForm,
+  Controller,
+  FormProvider,
+  SubmitHandler,
+} from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import * as workoutActions from '../store/actions/workoutActions';
 import * as ImagePicker from 'expo-image-picker';
@@ -19,12 +24,20 @@ import tw from 'tailwind-react-native-classnames';
 import Colors from '../constants/Colors';
 import CustomWorkoutInput from '../components/CustomWorkoutInput';
 
+type Exercice = {
+  name: string;
+  description: string;
+  variant: string;
+  logo: string;
+};
+
 const AddExerciceScreen = ({ navigation }) => {
+  const methods = useForm<Exercice>();
   const {
-    control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = methods;
+
   const [image, setImage] = useState();
 
   const dispatch = useDispatch();
@@ -32,7 +45,7 @@ const AddExerciceScreen = ({ navigation }) => {
   const token = useSelector((state) => state.auth.token);
 
   // Fonction
-  const onSubmit = (data) => {
+  const onSubmit: SubmitHandler<Exercice> = (data) => {
     // console.log(`data =>`, data);
     let image64;
     if (image) {
@@ -106,34 +119,34 @@ const AddExerciceScreen = ({ navigation }) => {
               </Text>
             </View>
           </TouchableOpacity>
-
-          <CustomWorkoutInput
-            fieldName="name"
-            control={control}
-            placeholder="Nom de l'exercice"
-            label="Nom de l'exercice"
-            keyboardType="default"
-            autoFocus={true}
-            autoCorrect={false}
-          />
-          <CustomWorkoutInput
-            fieldName="variant"
-            control={control}
-            placeholder="Variante"
-            label="Variante"
-            keyboardType="default"
-            autoCorrect={false}
-          />
-          <CustomWorkoutInput
-            fieldName="description"
-            control={control}
-            placeholder="Descriptif"
-            label="Descriptif"
-            keyboardType="default"
-            autoCorrect={false}
-            multiline
-          />
-
+          <FormProvider {...methods}>
+            <CustomWorkoutInput
+              fieldName="name"
+              control={control}
+              placeholder="Nom de l'exercice"
+              label="Nom de l'exercice"
+              keyboardType="default"
+              autoFocus={true}
+              autoCorrect={false}
+            />
+            <CustomWorkoutInput
+              fieldName="variant"
+              control={control}
+              placeholder="Variante"
+              label="Variante"
+              keyboardType="default"
+              autoCorrect={false}
+            />
+            <CustomWorkoutInput
+              fieldName="description"
+              control={control}
+              placeholder="Descriptif"
+              label="Descriptif"
+              keyboardType="default"
+              autoCorrect={false}
+              multiline
+            />
+          </FormProvider>
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.submit}

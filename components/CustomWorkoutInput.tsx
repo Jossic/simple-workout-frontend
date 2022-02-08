@@ -27,6 +27,7 @@ type CustomWorkoutInputProps = {
     | 'unit';
   placeholder?: string;
   label?: string;
+  testID?: string;
   keyboardType?: KeyboardTypeOptions;
   secureTextEntry?: boolean;
   autoFocus?: boolean;
@@ -38,6 +39,7 @@ const CustomWorkoutInput: React.FC<CustomWorkoutInputProps> = ({
   fieldName,
   placeholder,
   label,
+  testID = 'NS',
   keyboardType = 'default',
   secureTextEntry = false,
   autoFocus = false,
@@ -47,8 +49,9 @@ const CustomWorkoutInput: React.FC<CustomWorkoutInputProps> = ({
   const methods = useFormContext();
   return (
     <>
-      <Text style={[styles.label, tw``]}>{label}</Text>
+      {label && <Text style={[styles.label, tw``]}>{label}</Text>}
       <Controller
+        {...methods}
         name={fieldName}
         render={({ field: { value, onChange }, fieldState: { error } }) => {
           return (
@@ -62,6 +65,7 @@ const CustomWorkoutInput: React.FC<CustomWorkoutInputProps> = ({
                   placeholder={placeholder}
                   value={value}
                   onChangeText={onChange}
+                  testID={testID}
                   style={[styles.input, tw``]}
                   keyboardType={keyboardType}
                   secureTextEntry={secureTextEntry}
@@ -71,7 +75,7 @@ const CustomWorkoutInput: React.FC<CustomWorkoutInputProps> = ({
                 />
               </View>
               {error?.message !== '' && (
-                <Text testID={`errorMessage`} style={[styles.error, tw``]}>
+                <Text testID={`error${label}`} style={[styles.error, tw``]}>
                   {error?.message}
                 </Text>
               )}
@@ -91,6 +95,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     fontSize: 16,
+    minWidth: '80%',
   },
   label: {
     marginTop: 10,

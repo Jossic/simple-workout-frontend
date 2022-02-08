@@ -62,7 +62,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
                 />
               </View>
               {error?.message !== '' && (
-                <Text testID={`errorMessage`} style={[styles.error, tw``]}>
+                <Text testID={`error${label}`} style={[styles.error, tw``]}>
                   {error?.message}
                 </Text>
               )}

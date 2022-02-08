@@ -14,7 +14,7 @@ describe('Séances & exercices screen', () => {
   let store;
 
   //Doit y avoir un bouton + en bas
-  it('should have a + button', () => {
+  it.skip('should have a + button', () => {
     store = mockStore(initialState);
     const { queryByTestId } = render(
       <Provider store={store}>

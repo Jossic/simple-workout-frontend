@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  ActivityIndicator,
   Alert,
   ImagePickerResult,
   KeyboardAvoidingView,
@@ -13,18 +14,15 @@ import {
   View,
 } from 'react-native';
 import { Ionicons } from 'react-native-vector-icons';
-import {
-  useForm,
-  Controller,
-  FormProvider,
-  SubmitHandler,
-} from 'react-hook-form';
+import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import * as workoutActions from '../store/actions/workoutActions';
 import * as ImagePicker from 'expo-image-picker';
 import tw from 'tailwind-react-native-classnames';
 import Colors from '../constants/Colors';
 import CustomWorkoutInput from '../components/CustomWorkoutInput';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 //picker
 import { Picker } from '@react-native-picker/picker';
@@ -32,7 +30,7 @@ import { Picker } from '@react-native-picker/picker';
 type Exercice = {
   name: string;
   description: string;
-  units: string;
+  unit: string;
   instructions: string;
   type: string;
   variant: string;
@@ -40,13 +38,19 @@ type Exercice = {
 };
 
 const AddExerciceScreen = ({ navigation }) => {
-  const methods = useForm<Exercice>();
+  const validationSchema = Yup.object({
+    name: Yup.string().required("Merci de renseigner un nom d'exercice"),
+  });
+  const methods = useForm<Exercice>({
+    resolver: yupResolver(validationSchema),
+  });
   const {
     handleSubmit,
     formState: { errors },
   } = methods;
 
-  const [image, setImage] = useState();
+  const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState<ImagePickerResult>();
   const [type, setType] = useState();
   const [unit, setUnit] = useState();
 
@@ -68,6 +72,9 @@ const AddExerciceScreen = ({ navigation }) => {
       name: data.name,
       description: data.description,
       variant: data.variant,
+      unit: data.unit,
+      instructions: data.instructions,
+      type: data.type,
       logo: image64,
     };
 
@@ -96,14 +103,14 @@ const AddExerciceScreen = ({ navigation }) => {
 
     if (imagePicked.cancelled) {
       Alert.alert("Ajout d'image annulé", undefined);
-      setImage();
+      setImage(undefined);
     } else {
       setImage(imagePicked);
     }
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: Colors.ternary }}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'android' ? 'height' : 'padding'}
@@ -114,6 +121,7 @@ const AddExerciceScreen = ({ navigation }) => {
             <TouchableOpacity
               activeOpacity={0.8}
               // style={styles.submit}
+              testID="image"
               onPress={onPressPickerHandler}
             >
               <View
@@ -122,6 +130,7 @@ const AddExerciceScreen = ({ navigation }) => {
                   marginTop: 15,
                   flexDirection: 'row',
                   alignItems: 'center',
+                  marginBottom: 10,
                 }}
               >
                 <Ionicons name="images" size={23} color={Colors.primary} />
@@ -139,76 +148,78 @@ const AddExerciceScreen = ({ navigation }) => {
               <FormProvider {...methods}>
                 <CustomWorkoutInput
                   fieldName="name"
-                  placeholder="Nom de l'exercice"
-                  label="Nom de l'exercice"
+                  testID="name"
+                  placeholder="Nom de l'exercice*"
                   keyboardType="default"
                   autoFocus={true}
                   autoCorrect={false}
                 />
                 <CustomWorkoutInput
                   fieldName="variant"
+                  testID="variant"
                   placeholder="Variante"
-                  label="Variante"
                   keyboardType="default"
                   autoCorrect={false}
                 />
                 <CustomWorkoutInput
                   fieldName="description"
+                  testID="description"
                   placeholder="Descriptif"
-                  label="Descriptif"
                   keyboardType="default"
                   autoCorrect={false}
                   multiline
                 />
                 <CustomWorkoutInput
                   fieldName="instructions"
+                  testID="instructions"
                   placeholder="Insctructions"
-                  label="Insctructions"
                   keyboardType="default"
                   autoCorrect={false}
                   multiline
                 />
-                {/* <CustomWorkoutInput
-                fieldName="type"
-                placeholder="Type"
-                label="Type"
-                keyboardType="default"
-                autoCorrect={false}
-              /> */}
-                <Picker
-                  selectedValue={type}
-                  style={styles.picker}
-                  onValueChange={(itemValue, itemIndex) => setType(itemValue)}
-                >
-                  <Picker.Item label="Full-body" value="Full-body" />
-                  <Picker.Item label="Bras" value="Bras" />
-                  <Picker.Item label="Dos" value="Dos" />
-                </Picker>
+                {/* <View> */}
+                {/* <Text>Type d'exercice / Mode</Text> */}
+                <View style={tw`flex flex-row`}>
+                  <Picker
+                    selectedValue={type}
+                    style={styles.picker}
+                    itemStyle={{ backgroundColor: 'gray' }}
+                    testID="type"
+                    onValueChange={(itemValue, itemIndex) => setType(itemValue)}
+                  >
+                    <Picker.Item enabled={false} label="Type" value="Type" />
+                    <Picker.Item label="Full-body" value="Full-body" />
+                    <Picker.Item label="Bras" value="Bras" />
+                    <Picker.Item label="Dos" value="Dos" />
+                  </Picker>
 
-                {/* <CustomWorkoutInput
-                fieldName="units"
-                placeholder="Unités"
-                label="Unités"
-                keyboardType="default"
-                autoCorrect={false}
-              /> */}
-                <Picker
-                  selectedValue={unit}
-                  style={styles.picker}
-                  onValueChange={(itemValue, itemIndex) => setUnit(itemValue)}
-                >
-                  <Picker.Item label="Temps" value="Temps" />
-                  <Picker.Item label="Reps" value="Reps" />
-                  <Picker.Item label="Dos" value="Dos" />
-                </Picker>
+                  <Picker
+                    selectedValue={unit}
+                    style={styles.picker}
+                    itemStyle={{ backgroundColor: 'gray' }}
+                    testID="unit"
+                    onValueChange={(itemValue, itemIndex) => setUnit(itemValue)}
+                  >
+                    <Picker.Item enabled={false} label="Mode" value="Mode" />
+                    <Picker.Item label="Reps" value="Reps" />
+                    <Picker.Item label="Temps" value="Temps" />
+                  </Picker>
+                </View>
+                {/* </View> */}
               </FormProvider>
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.submit}
+                testID="submitEx"
                 onPress={handleSubmit(onSubmit)}
               >
-                <Text style={styles.submitText}>Créer</Text>
-                <Ionicons name="arrow-forward" size={23} color="white" />
+                <Text style={[styles.submitText, tw``]}>
+                  {loading ? (
+                    <ActivityIndicator size="small" color="white" />
+                  ) : (
+                    'Ajouter'
+                  )}
+                </Text>
               </TouchableOpacity>
             </View>
           </SafeAreaView>
@@ -222,7 +233,7 @@ export default AddExerciceScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.ternary,
     paddingTop: 30,
   },
   container2: {
@@ -261,7 +272,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   picker: {
-    // width: '80%',
-    minWidth: '80%',
+    minWidth: '40%',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    height: 50,
+    overflow: 'hidden',
   },
 });

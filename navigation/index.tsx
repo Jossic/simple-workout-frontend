@@ -37,6 +37,7 @@ import ExerciceScreen from '../screens/ExerciceScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AddTrainingScreen from '../screens/AddTrainingScreen';
 import AddExerciceScreen from '../screens/AddExerciceScreen';
+import UpdateExerciceScreen from '../screens/UpdateExerciceScreen';
 
 // Auth stack navigator
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
@@ -115,6 +116,11 @@ function RootNavigator() {
       <Stack.Screen
         name="Add Exercice"
         component={AddExerciceScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Update Exercice"
+        component={UpdateExerciceScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

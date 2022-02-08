@@ -4,31 +4,45 @@ import Colors from '../../constants/Colors';
 import { useDispatch, useSelector } from 'react-redux';
 import * as workoutActions from '../../store/actions/workoutActions';
 
-interface ExerciceProps {}
+import { useNavigation } from '@react-navigation/native';
 
-const Exercice: React.FC<ExerciceProps> = ({ item }) => {
+interface ExerciceProps {
+  exercice: {
+    id: string;
+    name: string;
+    description: string;
+    logo: string;
+    variant: string;
+    type: string;
+    unit: string;
+  };
+}
+
+const Exercice: React.FC<ExerciceProps> = ({ exercice }) => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.userId);
   const token = useSelector((state) => state.auth.token);
+  // Supprimer
+  // const onPressHandler = () => {
+  //   Alert.alert('Que souhaitez-vous faire ?', undefined, [
+  //     { text: 'Annuler', style: 'cancel' },
+  //     {
+  //       text: 'Supprimer',
+  //       style: 'destructive',
+  //       onPress: () =>
+  //         dispatch(workoutActions.deleteExercice(exercice.id, userId, token)),
+  //     },
+  //   ]);
+  // };
 
-  const onPressHandler = () => {
-    Alert.alert('Que souhaitez-vous faire ?', undefined, [
-      { text: 'Annuler', style: 'cancel' },
-      {
-        text: 'Supprimer',
-        style: 'destructive',
-        onPress: () =>
-          dispatch(workoutActions.deleteExercice(item.id, userId, token)),
-      },
-    ]);
-  };
   return (
-    <TouchableOpacity activeOpacity={0.8} onLongPress={onPressHandler}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onLongPress={() => navigation.navigate('Update Exercice', { exercice })}
+    >
       <View style={styles.note}>
-        <Text>
-          {item.name}
-          {item.variant}
-        </Text>
+        <Text>{exercice.name}</Text>
       </View>
     </TouchableOpacity>
   );

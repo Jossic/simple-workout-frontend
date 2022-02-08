@@ -27,6 +27,7 @@ export type RootStackParamList = {
   Home: undefined;
   'Add Training': undefined;
   'Add Exercice': undefined;
+  'Update Exercice': undefined;
 };
 
 export type AuthStackScreenProps<Screen extends keyof AuthStackParamList> =

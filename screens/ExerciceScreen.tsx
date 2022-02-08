@@ -20,7 +20,6 @@ import { FloatingAction } from 'react-native-floating-action';
 import { RootTabScreenProps } from '../types';
 
 interface ExerciceScreenProps {}
-type Add = 'Add Exercice' | 'Add Workout';
 
 const ExerciceScreen = ({ navigation }: RootTabScreenProps<'Exercice'>) => {
   const exercices = useSelector((state) => state.workout?.exercices);
@@ -54,7 +53,7 @@ const ExerciceScreen = ({ navigation }: RootTabScreenProps<'Exercice'>) => {
     <View style={styles.container}>
       <FlatList
         data={exercices}
-        renderItem={({ item }) => <Exercice item={item} />}
+        renderItem={({ item }) => <Exercice exercice={item} />}
       />
 
       <TouchableWithoutFeedback testID="plusButton">

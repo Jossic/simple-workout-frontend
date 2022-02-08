@@ -37,7 +37,10 @@ type Exercice = {
   logo: string;
 };
 
-const AddExerciceScreen = ({ navigation }) => {
+const UpdateExerciceScreen = ({ navigation, route }) => {
+  const { name, description, instructions, variant, logo } = route.params;
+
+  console.log(`route.params =>`, route.params);
   const validationSchema = Yup.object({
     name: Yup.string().required("Merci de renseigner un nom d'exercice"),
   });
@@ -267,7 +270,7 @@ const AddExerciceScreen = ({ navigation }) => {
   );
 };
 
-export default AddExerciceScreen;
+export default UpdateExerciceScreen;
 
 const styles = StyleSheet.create({
   container: {

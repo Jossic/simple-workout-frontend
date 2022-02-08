@@ -40,12 +40,14 @@ type Exercice = {
 const UpdateExerciceScreen = ({ navigation, route }) => {
   const { id, name, description, instructions, variant, logo } =
     route.params.exercice;
+  console.log(`route.params.exercice.type =>`, route.params.exercice.type);
 
   const validationSchema = Yup.object({
     name: Yup.string().required("Merci de renseigner un nom d'exercice"),
   });
   const methods = useForm<Exercice>({
     resolver: yupResolver(validationSchema),
+    defaultValues: { name, description, instructions, variant },
   });
   const {
     handleSubmit,

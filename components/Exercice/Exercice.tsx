@@ -23,18 +23,7 @@ const Exercice: React.FC<ExerciceProps> = ({ exercice }) => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.userId);
   const token = useSelector((state) => state.auth.token);
-  // Supprimer
-  // const onPressHandler = () => {
-  //   Alert.alert('Que souhaitez-vous faire ?', undefined, [
-  //     { text: 'Annuler', style: 'cancel' },
-  //     {
-  //       text: 'Supprimer',
-  //       style: 'destructive',
-  //       onPress: () =>
-  //         dispatch(workoutActions.deleteExercice(exercice.id, userId, token)),
-  //     },
-  //   ]);
-  // };
+  console.log(`exercice.unit =>`, exercice.unit);
 
   return (
     <TouchableOpacity
@@ -43,6 +32,7 @@ const Exercice: React.FC<ExerciceProps> = ({ exercice }) => {
     >
       <View style={styles.note}>
         <Text>{exercice.name}</Text>
+        <Text>{exercice.unit}</Text>
       </View>
     </TouchableOpacity>
   );

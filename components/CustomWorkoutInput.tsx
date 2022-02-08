@@ -50,9 +50,6 @@ const CustomWorkoutInput: React.FC<CustomWorkoutInputProps> = ({
         {...methods}
         name={fieldName}
         render={({ field: { value, onChange }, fieldState: { error } }) => {
-          if (preloadValue) {
-            value = preloadValue;
-          }
           return (
             <>
               <View

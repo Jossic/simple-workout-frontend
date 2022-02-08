@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -26,7 +27,7 @@ import Colors from '../constants/Colors';
 import CustomWorkoutInput from '../components/CustomWorkoutInput';
 
 //picker
-import RNPickerSelect from 'react-native-picker-select';
+import { Picker } from '@react-native-picker/picker';
 
 type Exercice = {
   name: string;
@@ -46,6 +47,8 @@ const AddExerciceScreen = ({ navigation }) => {
   } = methods;
 
   const [image, setImage] = useState();
+  const [type, setType] = useState();
+  const [unit, setUnit] = useState();
 
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.userId);
@@ -100,113 +103,118 @@ const AddExerciceScreen = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'android' ? 'height' : 'padding'}
-    >
-      <View style={[styles.container, tw`flex-1 items-center`]}>
-        <SafeAreaView style={{ flex: 1 }}>
-          <Text style={tw`text-xl`}>Ajouter un exercice</Text>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            // style={styles.submit}
-            onPress={onPressPickerHandler}
-          >
-            <View
-              style={{
-                ...styles.inputContainer,
-                marginTop: 15,
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
+    <ScrollView>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'android' ? 'height' : 'padding'}
+      >
+        <View style={[styles.container, tw`flex-1 items-center`]}>
+          <SafeAreaView style={{ flex: 1 }}>
+            <Text style={tw`text-xl`}>Ajouter un exercice</Text>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              // style={styles.submit}
+              onPress={onPressPickerHandler}
             >
-              <Ionicons name="images" size={23} color={Colors.primary} />
-              <Text style={{ marginLeft: 15 }}>
-                {image ? 'Image selectionnée' : 'Ajouter une image'}
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <View
-            style={[
-              styles.container2,
-              tw`flex items-center justify-center w-full`,
-            ]}
-          >
-            <FormProvider {...methods}>
-              <CustomWorkoutInput
-                fieldName="name"
-                placeholder="Nom de l'exercice"
-                label="Nom de l'exercice"
-                keyboardType="default"
-                autoFocus={true}
-                autoCorrect={false}
-              />
-              <CustomWorkoutInput
-                fieldName="variant"
-                placeholder="Variante"
-                label="Variante"
-                keyboardType="default"
-                autoCorrect={false}
-              />
-              <CustomWorkoutInput
-                fieldName="description"
-                placeholder="Descriptif"
-                label="Descriptif"
-                keyboardType="default"
-                autoCorrect={false}
-                multiline
-              />
-              <CustomWorkoutInput
-                fieldName="instructions"
-                placeholder="Insctructions"
-                label="Insctructions"
-                keyboardType="default"
-                autoCorrect={false}
-                multiline
-              />
-              {/* <CustomWorkoutInput
+              <View
+                style={{
+                  ...styles.inputContainer,
+                  marginTop: 15,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <Ionicons name="images" size={23} color={Colors.primary} />
+                <Text style={{ marginLeft: 15 }}>
+                  {image ? 'Image selectionnée' : 'Ajouter une image'}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <View
+              style={[
+                styles.container2,
+                tw`flex items-center justify-center w-full`,
+              ]}
+            >
+              <FormProvider {...methods}>
+                <CustomWorkoutInput
+                  fieldName="name"
+                  placeholder="Nom de l'exercice"
+                  label="Nom de l'exercice"
+                  keyboardType="default"
+                  autoFocus={true}
+                  autoCorrect={false}
+                />
+                <CustomWorkoutInput
+                  fieldName="variant"
+                  placeholder="Variante"
+                  label="Variante"
+                  keyboardType="default"
+                  autoCorrect={false}
+                />
+                <CustomWorkoutInput
+                  fieldName="description"
+                  placeholder="Descriptif"
+                  label="Descriptif"
+                  keyboardType="default"
+                  autoCorrect={false}
+                  multiline
+                />
+                <CustomWorkoutInput
+                  fieldName="instructions"
+                  placeholder="Insctructions"
+                  label="Insctructions"
+                  keyboardType="default"
+                  autoCorrect={false}
+                  multiline
+                />
+                {/* <CustomWorkoutInput
                 fieldName="type"
                 placeholder="Type"
                 label="Type"
                 keyboardType="default"
                 autoCorrect={false}
               /> */}
-              <RNPickerSelect
-                onValueChange={(value) => console.log(value)}
-                items={[
-                  { label: 'Full-body', value: 'Full-body' },
-                  { label: 'Bras', value: 'Bras' },
-                  { label: 'Dos', value: 'Dos' },
-                ]}
-              />
-              {/* <CustomWorkoutInput
+                <Picker
+                  selectedValue={type}
+                  style={styles.picker}
+                  onValueChange={(itemValue, itemIndex) => setType(itemValue)}
+                >
+                  <Picker.Item label="Full-body" value="Full-body" />
+                  <Picker.Item label="Bras" value="Bras" />
+                  <Picker.Item label="Dos" value="Dos" />
+                </Picker>
+
+                {/* <CustomWorkoutInput
                 fieldName="units"
                 placeholder="Unités"
                 label="Unités"
                 keyboardType="default"
                 autoCorrect={false}
               /> */}
-
-              <RNPickerSelect
-                onValueChange={(value) => console.log(value)}
-                items={[
-                  { label: 'Temps', value: 'Temps' },
-                  { label: 'Reps', value: 'Reps' },
-                ]}
-              />
-            </FormProvider>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={styles.submit}
-              onPress={handleSubmit(onSubmit)}
-            >
-              <Text style={styles.submitText}>Créer</Text>
-              <Ionicons name="arrow-forward" size={23} color="white" />
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
-      </View>
-    </KeyboardAvoidingView>
+                <Picker
+                  selectedValue={unit}
+                  style={styles.picker}
+                  onValueChange={(itemValue, itemIndex) => setUnit(itemValue)}
+                >
+                  <Picker.Item label="Temps" value="Temps" />
+                  <Picker.Item label="Reps" value="Reps" />
+                  <Picker.Item label="Dos" value="Dos" />
+                </Picker>
+              </FormProvider>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={styles.submit}
+                onPress={handleSubmit(onSubmit)}
+              >
+                <Text style={styles.submitText}>Créer</Text>
+                <Ionicons name="arrow-forward" size={23} color="white" />
+              </TouchableOpacity>
+            </View>
+          </SafeAreaView>
+        </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
@@ -219,9 +227,9 @@ const styles = StyleSheet.create({
   },
   container2: {
     flex: 1,
-    backgroundColor: Colors.transparent,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // backgroundColor: Colors.transparent,
+    // alignItems: 'center',
+    // justifyContent: 'center',
     width: '100%',
   },
   inputContainer: {
@@ -251,5 +259,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 30,
     borderRadius: 10,
+  },
+  picker: {
+    // width: '80%',
+    minWidth: '80%',
   },
 });

@@ -24,7 +24,7 @@ type CustomWorkoutInputProps = {
     | 'variant'
     | 'type'
     | 'instructions'
-    | 'units';
+    | 'unit';
   placeholder?: string;
   label?: string;
   keyboardType?: KeyboardTypeOptions;

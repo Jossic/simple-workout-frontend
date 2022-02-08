@@ -1,10 +1,18 @@
 import React from 'react';
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Colors from '../../constants/Colors';
 import { useDispatch, useSelector } from 'react-redux';
 import * as workoutActions from '../../store/actions/workoutActions';
 
 import { useNavigation } from '@react-navigation/native';
+import tw from 'tailwind-react-native-classnames';
 
 interface ExerciceProps {
   exercice: {
@@ -23,16 +31,25 @@ const Exercice: React.FC<ExerciceProps> = ({ exercice }) => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.userId);
   const token = useSelector((state) => state.auth.token);
-  console.log(`exercice.unit =>`, exercice.unit);
 
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       onLongPress={() => navigation.navigate('Update Exercice', { exercice })}
     >
-      <View style={styles.note}>
+      <View
+        style={[tw`flex flex-row items-center justify-between`, styles.note]}
+      >
+        <Image
+          source={
+            exercice.logo
+              ? { uri: exercice.logo }
+              : require('../../assets/images/woman.jpg')
+          }
+          style={styles.logo}
+        />
         <Text>{exercice.name}</Text>
-        <Text>{exercice.unit}</Text>
+        {/* <Text>{exercice.unit}</Text> */}
       </View>
     </TouchableOpacity>
   );
@@ -48,10 +65,14 @@ const styles = StyleSheet.create({
   },
   note: {
     backgroundColor: 'white',
-    padding: 15,
+    padding: 5,
     borderColor: Colors.primary,
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 15,
+  },
+  logo: {
+    height: 30,
+    width: 30,
   },
 });

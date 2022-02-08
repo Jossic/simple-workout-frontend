@@ -37,7 +37,7 @@ const ExerciceScreen = ({ navigation }: RootTabScreenProps<'Exercice'>) => {
       color: Colors.secondary,
     },
     {
-      text: 'Ajouter une séance',
+      text: 'Créer une séance',
       icon: <Icon name="contract" style={styles.actionButtonIcon} />,
       name: 'Add Training',
       position: 2,

@@ -86,11 +86,10 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
       unit,
       instructions: data.instructions,
       type,
-      //   logo: logo ? logo : image64,
+      logo: logo ? logo : image64,
     };
-    console.log(`exercice =>`, exercice);
-    // dispatch(workoutActions.updateExercice(exercice, userId, token));
-    // navigation.goBack();
+    dispatch(workoutActions.updateExercice(exercice, userId, token));
+    navigation.goBack();
   };
 
   const onDeleteHandler = () => {
@@ -256,9 +255,9 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
                     onValueChange={(itemValue, itemIndex) => setType(itemValue)}
                   >
                     <Picker.Item enabled={false} label="Type" value="Type" />
-                    <Picker.Item label="Full-body" value="Full-body" />
-                    <Picker.Item label="Bras" value="Bras" />
-                    <Picker.Item label="Dos" value="Dos" />
+                    <Picker.Item label="Exercice" value="Exercice" />
+                    <Picker.Item label="Echauffement" value="Echauffement" />
+                    <Picker.Item label="Etirement" value="Etirement" />
                   </Picker>
 
                   <Picker

@@ -13,6 +13,7 @@ export const UPDATE_EXERCICE = 'UPDATE_EXERCICE';
 export const DELETE_EXERCICE = 'DELETE_EXERCICE';
 
 export const addExercice = (exercice, userId, token) => {
+  console.log(`exercice action =>`, exercice);
   return (dispatch: Dispatch) => {
     axios
       .post(`/exercices/${userId}.json?auth=${token}`, exercice)
@@ -35,9 +36,10 @@ export const addExercice = (exercice, userId, token) => {
   };
 };
 export const updateExercice = (exercice, userId, token) => {
+  // recréer object a stocker en bd
   return (dispatch: Dispatch) => {
     axios
-      .put(`/exercices/${userId}.json?auth=${token}`, exercice)
+      .put(`/exercices/${userId}/${exercice.id}.json?auth=${token}`, exercice)
       .then((response) => {
         dispatch({ type: UPDATE_EXERCICE, exercice });
       })

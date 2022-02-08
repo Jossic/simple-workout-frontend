@@ -60,7 +60,6 @@ const AddExerciceScreen = ({ navigation }) => {
 
   // Fonction
   const onSubmit: SubmitHandler<Exercice> = (data) => {
-    // console.log(`data =>`, data);
     let image64;
     if (image) {
       const uriParts = image.uri.split('.');
@@ -72,9 +71,9 @@ const AddExerciceScreen = ({ navigation }) => {
       name: data.name,
       description: data.description,
       variant: data.variant,
-      unit: data.unit,
+      unit,
       instructions: data.instructions,
-      type: data.type,
+      type,
       logo: image64,
     };
 

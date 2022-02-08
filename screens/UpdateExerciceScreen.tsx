@@ -41,7 +41,6 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
   const { id, name, description, instructions, variant, logo } =
     route.params.exercice;
 
-  //   console.log(`route.params =>`, route.params);
   const validationSchema = Yup.object({
     name: Yup.string().required("Merci de renseigner un nom d'exercice"),
   });
@@ -55,8 +54,12 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
 
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<ImagePickerResult>(logo ? logo : null);
-  const [type, setType] = useState();
-  const [unit, setUnit] = useState();
+  const [type, setType] = useState(
+    route.params.exercice.type && route.params.exercice.type
+  );
+  const [unit, setUnit] = useState(
+    route.params.exercice.unit && route.params.exercice.unit
+  );
 
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.userId);
@@ -65,8 +68,9 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
   // Fonction
   const onSubmit: SubmitHandler<Exercice> = (data) => {
     console.log(`data =>`, data);
+    // Controller que tous les champs, meme les non modis sont bien pris
     let image64;
-    if (image) {
+    if (image && !logo) {
       const uriParts = image.uri.split('.');
       const fileType = uriParts[uriParts.length - 1];
       image64 = `data:image/${fileType};base64,${image.base64}`;
@@ -77,14 +81,14 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
       name: data.name,
       description: data.description,
       variant: data.variant,
-      unit: data.unit,
+      unit,
       instructions: data.instructions,
-      type: data.type,
-      logo: image64,
+      type,
+      //   logo: logo ? logo : image64,
     };
-
-    dispatch(workoutActions.updateExercice(exercice, userId, token));
-    navigation.goBack();
+    console.log(`exercice =>`, exercice);
+    // dispatch(workoutActions.updateExercice(exercice, userId, token));
+    // navigation.goBack();
   };
 
   const onDeleteHandler = () => {
@@ -239,7 +243,11 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
                 {/* <Text>Type d'exercice / Mode</Text> */}
                 <View style={tw`flex flex-row`}>
                   <Picker
-                    selectedValue={type}
+                    selectedValue={
+                      route.params.exercice.type
+                        ? route.params.exercice.type
+                        : type
+                    }
                     style={styles.picker}
                     itemStyle={{ backgroundColor: 'gray' }}
                     testID="type"
@@ -252,7 +260,11 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
                   </Picker>
 
                   <Picker
-                    selectedValue={unit}
+                    selectedValue={
+                      route.params.exercice.unit
+                        ? route.params.exercice.unit
+                        : unit
+                    }
                     style={styles.picker}
                     itemStyle={{ backgroundColor: 'gray' }}
                     testID="unit"

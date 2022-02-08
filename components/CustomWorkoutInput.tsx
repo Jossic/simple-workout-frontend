@@ -50,6 +50,9 @@ const CustomWorkoutInput: React.FC<CustomWorkoutInputProps> = ({
         {...methods}
         name={fieldName}
         render={({ field: { value, onChange }, fieldState: { error } }) => {
+          if (preloadValue) {
+            value = preloadValue;
+          }
           return (
             <>
               <View
@@ -58,8 +61,10 @@ const CustomWorkoutInput: React.FC<CustomWorkoutInputProps> = ({
                 }
               >
                 <TextInput
+                  {...methods}
                   placeholder={placeholder}
-                  value={preloadValue ? preloadValue : value}
+                  value={value}
+                  defaultValue={preloadValue && preloadValue}
                   onChangeText={onChange}
                   testID={testID}
                   style={[styles.input, tw`text-white`]}

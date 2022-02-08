@@ -38,9 +38,10 @@ type Exercice = {
 };
 
 const UpdateExerciceScreen = ({ navigation, route }) => {
-  const { name, description, instructions, variant, logo } = route.params;
+  const { id, name, description, instructions, variant, logo } =
+    route.params.exercice;
 
-  console.log(`route.params =>`, route.params);
+  //   console.log(`route.params =>`, route.params);
   const validationSchema = Yup.object({
     name: Yup.string().required("Merci de renseigner un nom d'exercice"),
   });
@@ -53,7 +54,7 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
   } = methods;
 
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState<ImagePickerResult>();
+  const [image, setImage] = useState<ImagePickerResult>(logo ? logo : null);
   const [type, setType] = useState();
   const [unit, setUnit] = useState();
 
@@ -63,7 +64,7 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
 
   // Fonction
   const onSubmit: SubmitHandler<Exercice> = (data) => {
-    // console.log(`data =>`, data);
+    console.log(`data =>`, data);
     let image64;
     if (image) {
       const uriParts = image.uri.split('.');
@@ -72,6 +73,7 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
     }
 
     const exercice = {
+      id,
       name: data.name,
       description: data.description,
       variant: data.variant,
@@ -81,8 +83,20 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
       logo: image64,
     };
 
-    dispatch(workoutActions.addExercice(exercice, userId, token));
+    dispatch(workoutActions.updateExercice(exercice, userId, token));
     navigation.goBack();
+  };
+
+  const onDeleteHandler = () => {
+    Alert.alert('Voulez-vous vraiment supprimer cet exercice ?', undefined, [
+      { text: 'Annuler', style: 'cancel' },
+      {
+        text: 'Supprimer',
+        style: 'destructive',
+        onPress: () =>
+          dispatch(workoutActions.deleteExercice(id, userId, token)),
+      },
+    ]);
   };
 
   const askPhotoOrCamera = () => {
@@ -190,14 +204,15 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
                 <CustomWorkoutInput
                   fieldName="name"
                   testID="name"
+                  preloadValue={name}
                   placeholder="Nom de l'exercice*"
                   keyboardType="default"
-                  autoFocus={true}
                   autoCorrect={false}
                 />
                 <CustomWorkoutInput
                   fieldName="variant"
                   testID="variant"
+                  preloadValue={variant}
                   placeholder="Variante"
                   keyboardType="default"
                   autoCorrect={false}
@@ -205,6 +220,7 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
                 <CustomWorkoutInput
                   fieldName="description"
                   testID="description"
+                  preloadValue={description}
                   placeholder="Descriptif"
                   keyboardType="default"
                   autoCorrect={false}
@@ -213,6 +229,7 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
                 <CustomWorkoutInput
                   fieldName="instructions"
                   testID="instructions"
+                  preloadValue={instructions}
                   placeholder="Insctructions"
                   keyboardType="default"
                   autoCorrect={false}
@@ -248,20 +265,36 @@ const UpdateExerciceScreen = ({ navigation, route }) => {
                 </View>
                 {/* </View> */}
               </FormProvider>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.submit}
-                testID="submitEx"
-                onPress={handleSubmit(onSubmit)}
-              >
-                <Text style={[styles.submitText, tw``]}>
-                  {loading ? (
-                    <ActivityIndicator size="small" color="white" />
-                  ) : (
-                    'Ajouter'
-                  )}
-                </Text>
-              </TouchableOpacity>
+              <View style={tw`flex flex-row `}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.errorButton}
+                  testID="deleteEx"
+                  onPress={() => onDeleteHandler()}
+                >
+                  <Text style={[styles.submitText, tw``]}>
+                    {loading ? (
+                      <ActivityIndicator size="small" color="white" />
+                    ) : (
+                      'Supprimer'
+                    )}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.submit}
+                  testID="submitEx"
+                  onPress={handleSubmit(onSubmit)}
+                >
+                  <Text style={[styles.submitText, tw``]}>
+                    {loading ? (
+                      <ActivityIndicator size="small" color="white" />
+                    ) : (
+                      'Modifier'
+                    )}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </SafeAreaView>
         </View>
@@ -303,6 +336,19 @@ const styles = StyleSheet.create({
   },
   submit: {
     backgroundColor: Colors.primary,
+    padding: 10,
+    width: 130,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    alignSelf: 'center',
+    marginTop: 30,
+    borderRadius: 10,
+    marginLeft: 5,
+  },
+  errorButton: {
+    backgroundColor: Colors.error,
+    marginRight: 5,
     padding: 10,
     width: 130,
     flexDirection: 'row',

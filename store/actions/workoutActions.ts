@@ -9,6 +9,7 @@ export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';
 export const ADD_EXERCICE = 'ADD_EXERCICE';
 export const GET_EXERCICES = 'GET_EXERCICES';
+export const UPDATE_EXERCICE = 'UPDATE_EXERCICE';
 export const DELETE_EXERCICE = 'DELETE_EXERCICE';
 
 export const addExercice = (exercice, userId, token) => {
@@ -20,10 +21,25 @@ export const addExercice = (exercice, userId, token) => {
           id: response.data.name,
           name: exercice.name,
           description: exercice.description,
+          unit: exercice.unit,
+          instructions: exercice.instructions,
+          type: exercice.type,
           variant: exercice.variant,
           logo: exercice.logo,
         };
         dispatch({ type: ADD_EXERCICE, exercice: newExercice });
+      })
+      .catch((error) => {
+        console.log(`catch addExercice error =>`, error);
+      });
+  };
+};
+export const updateExercice = (exercice, userId, token) => {
+  return (dispatch: Dispatch) => {
+    axios
+      .put(`/exercices/${userId}.json?auth=${token}`, exercice)
+      .then((response) => {
+        dispatch({ type: UPDATE_EXERCICE, exercice });
       })
       .catch((error) => {
         console.log(`catch addExercice error =>`, error);

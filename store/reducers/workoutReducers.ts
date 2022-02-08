@@ -4,25 +4,37 @@ import {
   ADD_EXERCICE,
   GET_EXERCICES,
   DELETE_EXERCICE,
+  UPDATE_EXERCICE,
 } from '../actions/workoutActions';
 
 export type Workout = {
   userId: string | null;
   token: string | null;
-  exercice: {
-    id: string;
-    name: string;
-    description: string;
-    variant: string;
-    logo: string;
-  };
+  exercices: [
+    {
+      id: string;
+      name: string;
+      description: string;
+      variant: string;
+      logo: string;
+    }
+  ];
 };
 
 type Action = {
   type: string;
   userId: string;
   token: string;
-  exercices: object;
+  exercice: {
+    id: string;
+    name: string;
+    description: string;
+    unit: string;
+    instructions: string;
+    type: string;
+    variant: string;
+    logo: string;
+  };
 };
 
 const initialState = {
@@ -81,6 +93,17 @@ export default (state: Workout = initialState, action: Action) => {
       return {
         ...state,
         exercices: [action.exercice, ...state.exercices],
+      };
+    case UPDATE_EXERCICE:
+      const exIndex = state.exercices.findIndex(
+        (exe) => exe.id === action.exercice.id
+      );
+      console.log(`exIndex =>`, exIndex);
+      state.exercices[exIndex] = action.exercice;
+
+      return {
+        ...state,
+        exercices: [...state.exercices],
       };
     case GET_EXERCICES:
       const exercices = [...action.exercices];

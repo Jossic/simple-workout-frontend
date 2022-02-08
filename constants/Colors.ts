@@ -33,4 +33,5 @@ export default {
   transparent: 'rgba(0,0,0,0.5)',
   linear: [linear1, linear2],
   quaternary: '#51CB20',
+  error: '#990F02',
 };

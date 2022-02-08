@@ -18,14 +18,9 @@ import tw from 'tailwind-react-native-classnames';
 import { AuthProps } from '../types/auth';
 
 type CustomWorkoutInputProps = {
-  fieldName:
-    | 'name'
-    | 'description'
-    | 'variant'
-    | 'type'
-    | 'instructions'
-    | 'unit';
+  fieldName: 'name' | 'description' | 'variant' | 'instructions';
   placeholder?: string;
+  preloadValue?: 'name' | 'description' | 'variant' | 'instructions';
   label?: string;
   testID?: string;
   keyboardType?: KeyboardTypeOptions;
@@ -39,6 +34,7 @@ const CustomWorkoutInput: React.FC<CustomWorkoutInputProps> = ({
   fieldName,
   placeholder,
   label,
+  preloadValue,
   testID = 'NS',
   keyboardType = 'default',
   secureTextEntry = false,
@@ -63,10 +59,10 @@ const CustomWorkoutInput: React.FC<CustomWorkoutInputProps> = ({
               >
                 <TextInput
                   placeholder={placeholder}
-                  value={value}
+                  value={preloadValue ? preloadValue : value}
                   onChangeText={onChange}
                   testID={testID}
-                  style={[styles.input, tw``]}
+                  style={[styles.input, tw`text-white`]}
                   keyboardType={keyboardType}
                   secureTextEntry={secureTextEntry}
                   autoFocus={autoFocus}

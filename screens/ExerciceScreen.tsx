@@ -52,8 +52,6 @@ const ExerciceScreen = ({ navigation }: RootTabScreenProps<'Exercice'>) => {
 
   return (
     <View style={styles.container}>
-      <Text>ExerciceScreen</Text>
-
       <FlatList
         data={exercices}
         renderItem={({ item }) => <Exercice item={item} />}

@@ -25,9 +25,15 @@ import tw from 'tailwind-react-native-classnames';
 import Colors from '../constants/Colors';
 import CustomWorkoutInput from '../components/CustomWorkoutInput';
 
+//picker
+import RNPickerSelect from 'react-native-picker-select';
+
 type Exercice = {
   name: string;
   description: string;
+  units: string;
+  instructions: string;
+  type: string;
   variant: string;
   logo: string;
 };
@@ -149,6 +155,44 @@ const AddExerciceScreen = ({ navigation }) => {
                 keyboardType="default"
                 autoCorrect={false}
                 multiline
+              />
+              <CustomWorkoutInput
+                fieldName="instructions"
+                placeholder="Insctructions"
+                label="Insctructions"
+                keyboardType="default"
+                autoCorrect={false}
+                multiline
+              />
+              {/* <CustomWorkoutInput
+                fieldName="type"
+                placeholder="Type"
+                label="Type"
+                keyboardType="default"
+                autoCorrect={false}
+              /> */}
+              <RNPickerSelect
+                onValueChange={(value) => console.log(value)}
+                items={[
+                  { label: 'Full-body', value: 'Full-body' },
+                  { label: 'Bras', value: 'Bras' },
+                  { label: 'Dos', value: 'Dos' },
+                ]}
+              />
+              {/* <CustomWorkoutInput
+                fieldName="units"
+                placeholder="Unités"
+                label="Unités"
+                keyboardType="default"
+                autoCorrect={false}
+              /> */}
+
+              <RNPickerSelect
+                onValueChange={(value) => console.log(value)}
+                items={[
+                  { label: 'Temps', value: 'Temps' },
+                  { label: 'Reps', value: 'Reps' },
+                ]}
               />
             </FormProvider>
             <TouchableOpacity

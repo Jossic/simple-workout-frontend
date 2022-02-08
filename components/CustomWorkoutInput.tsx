@@ -18,7 +18,13 @@ import tw from 'tailwind-react-native-classnames';
 import { AuthProps } from '../types/auth';
 
 type CustomWorkoutInputProps = {
-  fieldName: 'name' | 'description' | 'variant';
+  fieldName:
+    | 'name'
+    | 'description'
+    | 'variant'
+    | 'type'
+    | 'instructions'
+    | 'units';
   placeholder?: string;
   label?: string;
   keyboardType?: KeyboardTypeOptions;

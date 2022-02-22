@@ -69,7 +69,7 @@ export const getExercices = (userId, token) => {
         dispatch({ type: END_LOADING });
       })
       .catch((error) => {
-        console.log(`catch error getExercice =>`, error);
+        // console.log(`catch error getExercice =>`, error);
         dispatch({ type: END_LOADING });
       });
   };

@@ -1,4 +1,4 @@
-import ExerciceScreen from '../ExerciceScreen';
+import ExerciceScreen from '../WorkoutsScreen';
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
@@ -14,7 +14,7 @@ describe('Séances & exercices screen', () => {
   let store;
 
   //Doit y avoir un bouton + en bas
-  it.skip('should have a + button', () => {
+  it('should have a + button', () => {
     store = mockStore(initialState);
     const { queryByTestId } = render(
       <Provider store={store}>

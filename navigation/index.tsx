@@ -1,46 +1,22 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { ColorSchemeName } from 'react-native';
 import { useSelector } from 'react-redux';
-
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
-import {
-  AuthStackParamList,
-  RootStackParamList,
-  RootTabParamList,
-  RootTabScreenProps,
-  StartupParamList,
-} from '../types';
-import LinkingConfiguration from './LinkingConfiguration';
-// import * as Notifications from 'expo-notifications';
 import StartupScreen from '../screens/StartupScreen';
 import TrainingScreen from '../screens/TrainingScreen';
-import ExerciceScreen from '../screens/ExerciceScreen';
+import WorkoutsScreen from '../screens/WorkoutsScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import AddTrainingScreen from '../screens/AddTrainingScreen';
-import AddExerciceScreen from '../screens/AddExerciceScreen';
 import UpdateExerciceScreen from '../screens/UpdateExerciceScreen';
 
 // Auth stack navigator
-const AuthStack = createNativeStackNavigator<AuthStackParamList>();
+const AuthStack = createNativeStackNavigator();
 
 const AuthenticatorStackNavigator = () => {
   return (
@@ -64,29 +40,14 @@ const AuthenticatorStackNavigator = () => {
   );
 };
 
-export default function Navigation({}: // colorScheme,
-{
-  // colorScheme: ColorSchemeName;
-}) {
+export default function Navigation({}) {
   const didTryAutoLogin = useSelector((state) => {
-    // console.log(`state =>`, state);
     return state.auth.didTryAutoLogin;
   });
   const isAuth = !!useSelector((state) => state.auth.userId);
 
-  // const getDeviceToken = async () => {
-  //   const deviceToken = await Notifications.getExpoPushTokenAsync();
-  // };
-
-  // if (isAuth) {
-  //   // Recup le token de l'appareil
-  //   getDeviceToken();
-  // }
   return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      // theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-    >
+    <NavigationContainer>
       {didTryAutoLogin && !isAuth && <AuthenticatorStackNavigator />}
       {didTryAutoLogin && isAuth && <RootNavigator />}
       {!didTryAutoLogin && <StartupStackNavigator />}
@@ -98,7 +59,7 @@ export default function Navigation({}: // colorScheme,
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal
  */
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
   return (
@@ -108,7 +69,7 @@ function RootNavigator() {
         component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Add Training"
         component={AddTrainingScreen}
         options={{ headerShown: false }}
@@ -122,7 +83,7 @@ function RootNavigator() {
         name="Update Exercice"
         component={UpdateExerciceScreen}
         options={{ headerShown: false }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 }
@@ -131,7 +92,7 @@ function RootNavigator() {
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
+const BottomTab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
@@ -147,9 +108,9 @@ function BottomTabNavigator() {
           if (route.name === 'HomeScreen') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Training') {
-            iconName = focused ? 'barbell' : 'barbell-outline';
+            iconName = focused ? 'aperture' : 'aperture-outline';
           } else if (route.name === 'Exercice') {
-            iconName = focused ? 'bicycle' : 'bicycle-outline';
+            iconName = focused ? 'barbell' : 'barbell-outline';
           } else if (route.name === 'Settings') {
             iconName = focused ? 'settings' : 'settings-outline';
           }
@@ -161,7 +122,7 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={({ navigation }: RootTabScreenProps<'HomeScreen'>) => ({
+        options={() => ({
           title: 'Accueil',
           // Ajouter bouton avec profil
         })}
@@ -170,39 +131,29 @@ function BottomTabNavigator() {
         name="Training"
         component={TrainingScreen}
         options={{
-          title: 'Training',
+          title: "S'entrainer",
         }}
       />
       <BottomTab.Screen
         name="Exercice"
-        component={ExerciceScreen}
+        component={WorkoutsScreen}
         options={{
-          title: 'Exercice',
+          title: 'Workouts',
         }}
       />
       <BottomTab.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
-          title: 'Settings',
+          title: 'Suivi',
         }}
       />
     </BottomTab.Navigator>
   );
 }
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-// function TabBarIcon(props: {
-//   name: React.ComponentProps<typeof FontAwesome>['name'];
-//   color: string;
-// }) {
-//   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
-// }
-
 // Startup stack navigator
-const StartupStack = createNativeStackNavigator<StartupParamList>();
+const StartupStack = createNativeStackNavigator();
 
 export const StartupStackNavigator = () => {
   return (

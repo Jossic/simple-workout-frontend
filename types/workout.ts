@@ -18,3 +18,18 @@ export interface Exercise {
   //   aim: string;
   reps?: number;
 }
+
+export interface ExerciseOnly {
+  name: string;
+  logo?: string;
+  description?: string;
+  instruction?: string;
+  unit: 'time' | 'reps';
+  // vatiant?: string;
+  type: 'exercise' | 'souplesse' | 'echauffement';
+  // RIS?: number;
+  // RIE?: number;
+  // nbSet?: number;
+  //   aim: string;
+  // reps?: number;
+}

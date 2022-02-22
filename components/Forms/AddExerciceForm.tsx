@@ -16,32 +16,23 @@ import {
 import { Ionicons } from 'react-native-vector-icons';
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import * as workoutActions from '../store/actions/workoutActions';
+import * as workoutActions from '../../store/actions/workoutActions';
 import * as ImagePicker from 'expo-image-picker';
 import tw from 'tailwind-react-native-classnames';
-import Colors from '../constants/Colors';
-import CustomWorkoutInput from '../components/CustomWorkoutInput';
+import Colors from '../../constants/Colors';
+import CustomWorkoutInput from '../CustomWorkoutInput';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 //picker
 import { Picker } from '@react-native-picker/picker';
+import { ExerciseOnly } from '../../types/workout';
 
-type Exercice = {
-  name: string;
-  description: string;
-  unit: string;
-  instructions: string;
-  type: string;
-  variant: string;
-  logo: string;
-};
-
-const AddExerciceScreen = ({ navigation }) => {
+const AddExerciceForm = ({ navigation }) => {
   const validationSchema = Yup.object({
     name: Yup.string().required("Merci de renseigner un nom d'exercice"),
   });
-  const methods = useForm<Exercice>({
+  const methods = useForm<ExerciseOnly>({
     resolver: yupResolver(validationSchema),
   });
   const {
@@ -59,7 +50,7 @@ const AddExerciceScreen = ({ navigation }) => {
   const token = useSelector((state) => state.auth.token);
 
   // Fonction
-  const onSubmit: SubmitHandler<Exercice> = (data) => {
+  const onSubmit: SubmitHandler<ExerciseOnly> = (data) => {
     let image64;
     if (image) {
       const uriParts = image.uri.split('.');
@@ -191,13 +182,13 @@ const AddExerciceScreen = ({ navigation }) => {
                   autoFocus={true}
                   autoCorrect={false}
                 />
-                <CustomWorkoutInput
+                {/* <CustomWorkoutInput
                   fieldName="variant"
                   testID="variant"
                   placeholder="Variante"
                   keyboardType="default"
                   autoCorrect={false}
-                />
+                /> */}
                 <CustomWorkoutInput
                   fieldName="description"
                   testID="description"
@@ -266,7 +257,7 @@ const AddExerciceScreen = ({ navigation }) => {
   );
 };
 
-export default AddExerciceScreen;
+export default AddExerciceForm;
 
 const styles = StyleSheet.create({
   container: {

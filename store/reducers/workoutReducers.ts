@@ -38,53 +38,7 @@ type Action = {
 };
 
 const initialState = {
-  exercices: [
-    //   {
-    //     name: 'Dips entre deux bancs',
-    //     variant: '',
-    //     description: '',
-    //   },
-    //   {
-    //     name: 'Pompe prise large',
-    //     variant: 'Mains 45cm de haut',
-    //     description: '',
-    //   },
-    //   {
-    //     name: 'Traction verti prise supination',
-    //     variant: 'Elastique',
-    //     description: '',
-    //   },
-    //   {
-    //     name: 'Traction hori prise pronation',
-    //     variant: '',
-    //     description: '',
-    //   },
-    //   {
-    //     name: 'Squats',
-    //     variant: '',
-    //     description: '',
-    //   },
-    //   {
-    //     name: 'Bondissements',
-    //     variant: '',
-    //     description: '',
-    //   },
-    //   {
-    //     name: 'Crunchs',
-    //     variant: '',
-    //     description: '',
-    //   },
-    //   {
-    //     name: 'Crunch pieds au sol',
-    //     variant: '',
-    //     description: '',
-    //   },
-    //   {
-    //     name: 'K2',
-    //     variant: 'Hauteur 130cm',
-    //     description: '',
-    //   },
-  ],
+  exercices: [],
 };
 
 export default (state: Workout = initialState, action: Action) => {

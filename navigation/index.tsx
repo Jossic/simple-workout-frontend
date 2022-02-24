@@ -112,7 +112,7 @@ function BottomTabNavigator() {
           } else if (route.name === 'Exercice') {
             iconName = focused ? 'barbell' : 'barbell-outline';
           } else if (route.name === 'Settings') {
-            iconName = focused ? 'settings' : 'settings-outline';
+            iconName = focused ? 'list' : 'list-outline';
           }
 
           return <Ionicons name={iconName} color={color} size={size} />;

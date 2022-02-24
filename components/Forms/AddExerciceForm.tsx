@@ -28,7 +28,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Picker } from '@react-native-picker/picker';
 import { ExerciseOnly } from '../../types/workout';
 
-const AddExerciceForm = ({ navigation }) => {
+const AddExerciceForm = ({ onSubmit }) => {
   const validationSchema = Yup.object({
     name: Yup.string().required("Merci de renseigner un nom d'exercice"),
   });
@@ -50,27 +50,27 @@ const AddExerciceForm = ({ navigation }) => {
   const token = useSelector((state) => state.auth.token);
 
   // Fonction
-  const onSubmit: SubmitHandler<ExerciseOnly> = (data) => {
-    let image64;
-    if (image) {
-      const uriParts = image.uri.split('.');
-      const fileType = uriParts[uriParts.length - 1];
-      image64 = `data:image/${fileType};base64,${image.base64}`;
-    }
+  // const onSubmit: SubmitHandler<ExerciseOnly> = (data) => {
+  //   let image64;
+  //   if (image) {
+  //     const uriParts = image.uri.split('.');
+  //     const fileType = uriParts[uriParts.length - 1];
+  //     image64 = `data:image/${fileType};base64,${image.base64}`;
+  //   }
 
-    const exercice = {
-      name: data.name,
-      description: data.description,
-      variant: data.variant,
-      unit,
-      instructions: data.instructions,
-      type,
-      logo: image64,
-    };
+  //   const exercice = {
+  //     name: data.name,
+  //     description: data.description,
+  //     variant: data.variant,
+  //     unit,
+  //     instructions: data.instructions,
+  //     type,
+  //     logo: image64,
+  //   };
 
-    dispatch(workoutActions.addExercice(exercice, userId, token));
-    navigation.goBack();
-  };
+  //   dispatch(workoutActions.addExercice(exercice, userId, token));
+  //   navigation.goBack();
+  // };
 
   const askPhotoOrCamera = () => {
     Alert.alert(undefined, 'Ajouter une image', [

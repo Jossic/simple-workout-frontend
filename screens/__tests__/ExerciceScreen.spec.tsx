@@ -24,5 +24,25 @@ describe('Séances & exercices screen', () => {
 
     expect(queryByTestId('plusButton')).toBeDefined();
   });
+  it('should display Liste des exercices', () => {
+    store = mockStore(initialState);
+    const { queryByTestId } = render(
+      <Provider store={store}>
+        <ExerciceScreen />
+      </Provider>
+    );
+
+    expect(queryByTestId('plusButton')).toBeDefined();
+  });
+  it('should display Liste des workouts', () => {
+    store = mockStore(initialState);
+    const { queryByTestId } = render(
+      <Provider store={store}>
+        <ExerciceScreen />
+      </Provider>
+    );
+
+    expect(queryByTestId('plusButton')).toBeDefined();
+  });
   //Doit pouvoir ajouter un exo, ou une seance
 });
